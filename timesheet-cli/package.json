@@ -1,0 +1,29 @@
+{
+  "name": "timesheet-cli",
+  "version": "1.0.0",
+  "module": "src/index.ts",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "timesheet": "./dist/timesheet"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "build": "bun build src/index.ts --compile --outfile dist/timesheet",
+    "build:mac": "bun build src/index.ts --compile --outfile dist/timesheet-macos",
+    "test": "bun test",
+    "lint": "bunx biome lint src/",
+    "format": "bunx biome format --write src/",
+    "check": "bunx biome check --write src/"
+  },
+  "dependencies": {
+    "cac": "^7.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
