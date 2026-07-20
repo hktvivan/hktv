@@ -1,0 +1,1 @@
+hktv_psos	psos_replenishment_category_storage_type	MODIFY storage_type ENUM('A','B','C','D','E','F','G','H','J','M','P','Q','S','T') COLLATE utf8_unicode_ci NOT NULL

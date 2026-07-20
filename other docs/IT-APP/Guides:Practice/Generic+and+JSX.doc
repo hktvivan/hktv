@@ -1,0 +1,336 @@
+Message-ID: <1124211595.15.1730792730746@dfe977dde9e0>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_14_944507050.1730792730745"
+
+------=_Part_14_944507050.1730792730745
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>Generic and JSX</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>Generic and JSX</h1>
+    <div class=3D"Section1">
+        <div class=3D"confluence-information-macro confluence-information-m=
+acro-note">
+<span class=3D"aui-icon aui-icon-small aui-iconfont-warning confluence-info=
+rmation-macro-icon"></span>
+<div class=3D"confluence-information-macro-body">
+<p>=E2=9C=98 [ERROR] The character "&gt;" is not valid inside a JSX element=
+</p>
+</div>
+</div>
+<p>=E5=9C=A8 Typescript =E4=BD=BF=E7=94=A8=E6=B3=9B=E5=9E=8B &lt;T&gt; =E6=
+=99=82=EF=BC=8Ccomplier =E5=8F=AF=E8=83=BD=E6=9C=83=E6=8F=90=E7=A4=BA=E4=BD=
+=A0</p>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: java; gutter: false; theme: Confluence" data-theme=3D"Confluence">  TypeS=
+cript's TSX syntax interprets arrow functions with a single generic type pa=
+rameter as an
+  opening JSX element. If you want it to be interpreted as an arrow functio=
+n instead, you need to
+  add a trailing comma after the type parameter to disambiguate:</pre>
+</div>
+</div>
+<p>=E5=95=8F=E9=A1=8C=E6=98=AF complier =E7=84=A1=E6=B3=95=E8=BE=A8=E8=AD=
+=98=E5=87=BA=E4=BD=A0=E6=98=AF=E4=B8=8D=E6=98=AF=E5=9C=A8=E4=BD=BF=E7=94=A8=
+ JSX</p>
+<p></p>
+<p>=E8=80=8C error message =E4=B9=9F=E6=8F=90=E4=BE=9B=E4=BA=86=E5=B0=8D=E6=
+=87=89=E8=A7=A3=E6=B1=BA=E6=96=B9=E6=A1=88=EF=BC=8C=E5=8A=A0=E4=B8=8A=E4=B8=
+=80=E5=80=8B=E5=BE=8C=E7=B6=B4=E7=9A=84, =E7=AC=A6=E8=99=9F=E5=B0=B1=E5=8F=
+=AF=E4=BB=A5=E8=AE=93 complier =E7=9F=A5=E9=81=93=E9=80=99=E4=B8=8D=E6=98=
+=AF=E4=B8=80=E5=80=8B JSX =E8=80=8C=E6=98=AF=E6=B3=9B=E5=9E=8B=E7=9A=84=E5=
+=AE=A3=E5=91=8A &lt;T,&gt;</p>
+<p>=E9=99=A4=E6=AD=A4=E4=B9=8B=E5=A4=96=EF=BC=8C=E9=82=84=E5=8F=AF=E4=BB=A5=
+=E5=9C=A8=E4=BD=BF=E7=94=A8=E6=B3=9B=E5=9E=8B=E6=99=82=E5=AE=A3=E5=91=8A &l=
+t;T extends {}&gt;</p>
+<ul>
+<li>
+<p><strong>=E4=BD=9C=E7=94=A8</strong>=EF=BC=9A<code>&lt;T extends {}&gt;</=
+code> =E8=A1=A8=E7=A4=BA=E6=B3=9B=E5=9E=8B <code>T</code> =E5=BF=85=E9=A0=
+=88=E6=98=AF=E6=9F=90=E7=A8=AE=E9=A1=9E=E5=9E=8B=E7=9A=84=E5=AD=90=E9=A1=9E=
+=E5=9E=8B=E3=80=82=E9=80=99=E8=A3=A1=E7=9A=84 <code>{}</code> =E8=A1=A8=E7=
+=A4=BA <code>T</code> =E8=87=B3=E5=B0=91=E6=98=AF=E4=B8=80=E5=80=8B=E7=89=
+=A9=E4=BB=B6=E9=A1=9E=E5=9E=8B=EF=BC=88=E5=8D=B3 <code>T</code> =E4=B8=8D=
+=E8=83=BD=E6=98=AF=E5=8E=9F=E5=A7=8B=E9=A1=9E=E5=9E=8B=EF=BC=8C=E5=A6=82 <c=
+ode>number</code>=E3=80=81<code>string</code>=E3=80=81<code>boolean</code> =
+=E7=AD=89=EF=BC=89=E3=80=82</p></li>
+<li>
+<p><strong>=E4=BD=BF=E7=94=A8=E6=83=85=E5=A2=83</strong>=EF=BC=9A=E9=80=99=
+=E7=A8=AE=E5=AF=AB=E6=B3=95=E4=B8=8D=E5=83=85=E6=B6=88=E9=99=A4=E4=BA=86 JS=
+X =E7=9A=84=E6=AD=A7=E7=BE=A9=EF=BC=8C=E9=82=84=E6=B7=BB=E5=8A=A0=E4=BA=86=
+=E4=B8=80=E5=80=8B=E9=A1=9E=E5=9E=8B=E7=B4=84=E6=9D=9F=EF=BC=8C=E5=BC=B7=E5=
+=88=B6=E8=A6=81=E6=B1=82=E6=B3=9B=E5=9E=8B <code>T</code> =E6=98=AF=E7=89=
+=A9=E4=BB=B6=EF=BC=88=E6=88=96=E5=85=B7=E6=9C=89=E7=89=A9=E4=BB=B6=E5=BD=A2=
+=E6=85=8B=E7=9A=84=E9=A1=9E=E5=9E=8B=EF=BC=89=E3=80=82=E7=95=B6=E5=B8=8C=E6=
+=9C=9B=E6=B3=9B=E5=9E=8B=E5=8F=83=E6=95=B8=E5=BF=85=E9=A0=88=E5=85=B7=E5=82=
+=99=E7=89=A9=E4=BB=B6=E7=9A=84=E6=80=A7=E8=B3=AA=E6=99=82=EF=BC=8C=E9=80=99=
+=E6=98=AF=E4=B8=80=E5=80=8B=E6=9C=89=E6=95=88=E7=9A=84=E9=81=B8=E6=93=87=E3=
+=80=82</p></li>
+</ul>
+<h3 id=3D"GenericandJSX-=E5=B7=AE=E7=95=B0=E7=B8=BD=E7=B5=90=EF=BC=9A">=E5=
+=B7=AE=E7=95=B0=E7=B8=BD=E7=B5=90=EF=BC=9A</h3>
+<ul>
+<li>
+<p><code>&lt;T,&gt;</code>=EF=BC=9A=E5=83=85=E7=94=A8=E6=96=BC=E8=A7=A3=E6=
+=B1=BA JSX =E5=92=8C=E6=B3=9B=E5=9E=8B=E7=9A=84=E8=AA=9E=E6=B3=95=E6=AD=A7=
+=E7=BE=A9=EF=BC=8C=E5=B0=8D=E6=B3=9B=E5=9E=8B=E6=B2=92=E6=9C=89=E7=B4=84=E6=
+=9D=9F=EF=BC=8C<code>T</code> =E5=8F=AF=E4=BB=A5=E6=98=AF=E4=BB=BB=E4=BD=95=
+=E9=A1=9E=E5=9E=8B=EF=BC=88=E5=8C=85=E6=8B=AC=E5=8E=9F=E5=A7=8B=E9=A1=9E=E5=
+=9E=8B=E5=92=8C=E7=89=A9=E4=BB=B6=E9=A1=9E=E5=9E=8B=EF=BC=89=E3=80=82</p></=
+li>
+<li>
+<p><code>&lt;T extends {}&gt;</code>=EF=BC=9A=E6=97=A2=E8=83=BD=E8=A7=A3=E6=
+=B1=BA JSX =E6=AD=A7=E7=BE=A9=EF=BC=8C=E5=8F=88=E7=B5=A6=E6=B3=9B=E5=9E=8B =
+<code>T</code> =E6=B7=BB=E5=8A=A0=E4=BA=86=E4=B8=80=E5=80=8B=E7=89=A9=E4=BB=
+=B6=E9=A1=9E=E5=9E=8B=E7=9A=84=E7=B4=84=E6=9D=9F=EF=BC=8C=E6=84=8F=E5=91=B3=
+=E8=91=97 <code>T</code> =E4=B8=8D=E8=83=BD=E6=98=AF=E5=8E=9F=E5=A7=8B=E9=
+=A1=9E=E5=9E=8B=EF=BC=88=E5=A6=82 <code>number</code>=E3=80=81<code>string<=
+/code> =E7=AD=89=EF=BC=89=EF=BC=8C=E5=8F=AA=E8=83=BD=E6=98=AF=E7=89=A9=E4=
+=BB=B6=E9=A1=9E=E5=9E=8B=E6=88=96=E7=89=A9=E4=BB=B6=E7=9A=84=E5=AD=90=E9=A1=
+=9E=E5=9E=8B=E3=80=82</p></li>
+</ul>
+<p><strong>=E4=BD=95=E6=99=82=E4=BD=BF=E7=94=A8=E5=93=AA=E4=B8=80=E5=80=8B=
+=EF=BC=9F</strong></p>
+<ul>
+<li>
+<p>=E5=A6=82=E6=9E=9C=E4=BD=A0=E5=8F=AA=E6=83=B3=E8=A7=A3=E6=B1=BA=E6=B3=9B=
+=E5=9E=8B=E5=92=8C JSX =E8=AA=9E=E6=B3=95=E7=9A=84=E6=AD=A7=E7=BE=A9=E5=95=
+=8F=E9=A1=8C=EF=BC=8C=E8=80=8C=E4=B8=8D=E9=97=9C=E5=BF=83 <code>T</code> =
+=E7=9A=84=E5=85=B7=E9=AB=94=E9=A1=9E=E5=9E=8B=EF=BC=8C=E4=BD=BF=E7=94=A8 <c=
+ode>&lt;T,&gt;</code> =E5=B0=B1=E5=8F=AF=E4=BB=A5=E3=80=82</p></li>
+<li>
+<p>=E5=A6=82=E6=9E=9C=E4=BD=A0=E5=B8=8C=E6=9C=9B=E6=B3=9B=E5=9E=8B=E5=8F=83=
+=E6=95=B8=E5=BF=85=E9=A0=88=E6=98=AF=E4=B8=80=E5=80=8B=E7=89=A9=E4=BB=B6=E9=
+=A1=9E=E5=9E=8B=EF=BC=8C=E4=B8=A6=E4=B8=94=E9=82=84=E9=9C=80=E8=A6=81=E8=A7=
+=A3=E6=B1=BA=E6=AD=A7=E7=BE=A9=EF=BC=8C=E4=BD=BF=E7=94=A8 <code>&lt;T exten=
+ds {}&gt;</code> =E6=9B=B4=E5=90=88=E9=81=A9=E3=80=82</p></li>
+</ul>
+<p></p>
+    </div>
+</body>
+</html>
+------=_Part_14_944507050.1730792730745--

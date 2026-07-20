@@ -1,0 +1,827 @@
+Message-ID: <497769735.13.1730791135763@51fb7da2304f>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_12_629094409.1730791135762"
+
+------=_Part_12_629094409.1730791135762
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>App Config/Web URL</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>App Config/Web URL</h1>
+    <div class=3D"Section1">
+        <p></p>
+<div class=3D"table-wrap">
+<table data-table-width=3D"1800" data-layout=3D"full-width" data-local-id=
+=3D"f64a16e3-fac7-4e44-9f8f-2c37d0cf9dba" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 268.0px;">
+<col style=3D"width: 510.0px;">
+<col style=3D"width: 309.0px;">
+<col style=3D"width: 492.0px;">
+<col style=3D"width: 221.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>Merchant App</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>App Config</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Web Url</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Accounts</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Remark</strong></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>dev</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://twappconfig.blob.core.windows=
+.net/config/dev/config.json" rel=3D"nofollow">https://twappconfig.blob.core=
+.windows.net/config/dev/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://mms-dev.hkmpcl.com.hk/order-m=
+anagement/orders" rel=3D"nofollow">https://mms-dev.hkmpcl.com.hk/order-mana=
+gement/orders</a></p></td>
+<td class=3D"confluenceTd">
+<p>RM role</p>
+<hr>
+<ul>
+<li>
+<p>RM<br>
+edith+rm2/ Qwe12345<br>
+gary+rm_dav / Qwe123</p></li>
+<li>
+<p>RML<br>
+edith+rml2/ Qwe123<br>
+annie+rml/ Qwe1234<br>
+gary+rml_dav / Qwe123</p></li>
+<li>
+<p>RM admin<br>
+admin+rmadmin/ Qwe123</p></li>
+<li>
+<p>RMO<br>
+edith+RMO/ Qwe123</p></li>
+<li>
+<p>OPERATION_ADMIN<br>
+edith+OPERATION_ADMIN/ Qwe123</p></li>
+</ul>
+<hr>
+<p><br><br>
+wayne002 / Wayne001</p>
+<p>chicchat:</p>
+<p>Merchant admin<br><a class=3D"external-link" href=3D"mailto:ernest.ya+10=
+0@shoalter.com" rel=3D"nofollow">ernest.ya+100@shoalter.com</a><br>
+Qwe123<br>
+--------------------------------------<br>
+Merchant<br><a class=3D"external-link" href=3D"mailto:ernest.ya+101@shoalte=
+r.com" rel=3D"nofollow">ernest.ya+101@shoalter.com</a><br>
+Qwe123 (edited)</p>
+<p></p>
+<p><a class=3D"external-link" href=3D"mailto:wicky.sze+be01@shoalter.com" r=
+el=3D"nofollow">wicky.sze+be01@shoalter.com</a> / AOmbnCMJBEZu <span class=
+=3D"status-macro aui-lozenge aui-lozenge-complete">HKTVMALL</span><span cla=
+ss=3D"status-macro aui-lozenge aui-lozenge-error">SUPPORT CHAT</span><br><a=
+ class=3D"external-link" href=3D"mailto:wicky.sze+be02@shoalter.com" rel=3D=
+"nofollow">wicky.sze+be02@shoalter.com</a> / gOr4BVfWYMxq<br><a class=3D"ex=
+ternal-link" href=3D"mailto:wicky.sze+be03@shoalter.com" rel=3D"nofollow">w=
+icky.sze+be03@shoalter.com</a> / TzdVyGgkEgZH<br><a class=3D"external-link"=
+ href=3D"mailto:wicky.sze+be04@shoalter.com" rel=3D"nofollow">wicky.sze+be0=
+4@shoalter.com</a>/ ePrHMmC5rgUZ<br><a class=3D"external-link" href=3D"mail=
+to:wicky.sze+be05@shoalter.com" rel=3D"nofollow">wicky.sze+be05@shoalter.co=
+m</a> / HwIicCsK7DPY<br><a class=3D"external-link" href=3D"mailto:wicky.sze=
++08@shoalter.com" rel=3D"nofollow">wicky.sze+08@shoalter.com</a> / Test1234=
+ <span class=3D"status-macro aui-lozenge aui-lozenge-complete">HKTVMALL</sp=
+an><span class=3D"status-macro aui-lozenge aui-lozenge-error">SUPPORT CHAT<=
+/span><span class=3D"status-macro aui-lozenge">PAYMENT</span><br><br><a cla=
+ss=3D"external-link" href=3D"mailto:wayne.su+shops001@shoalter.com" rel=3D"=
+nofollow">wayne.su+shops001@shoalter.com</a>/ HTtv2023 <span class=3D"statu=
+s-macro aui-lozenge aui-lozenge-current">THE PLACE</span><span class=3D"sta=
+tus-macro aui-lozenge aui-lozenge-success">CUSTOMER CHAT</span><br></p>
+<hr>
+<p>for order mgt shop test <br><a class=3D"external-link" href=3D"mailto:wa=
+yne.su+tpl@shoalter.com" rel=3D"nofollow">wayne.su+tpl@shoalter.com</a>/Qwe=
+123<span class=3D"status-macro aui-lozenge aui-lozenge-error">SUPPORT CHAT<=
+/span><span class=3D"status-macro aui-lozenge aui-lozenge-success">CUSTOMER=
+ CHAT</span><br>
+hdtv<br><a class=3D"external-link" href=3D"https://ecomtest01.hkmpcl.com.hk=
+/hktv/zh/main/%E6%B8%AC%E8%A9%A6-TPL-CMS/s/H9067001?q=3D::store:H9067001" r=
+el=3D"nofollow">https://ecomtest01.hkmpcl.com.hk/hktv/zh/main/=E6=B8=AC=E8=
+=A9=A6-TPL-CMS/s/H9067001?q=3D::store:H9067001</a><br><br>
+ThePlace<br><a class=3D"external-link" href=3D"https://littlemall-dev.hkmpc=
+l.com.hk/s/100005711S/checkout" rel=3D"nofollow">https://littlemall-dev.hkm=
+pcl.com.hk/s/100005711S/checkout</a><br><br>
+User <br>
+=E5=B8=B3=E8=99=9F=EF=BC=9A<a href=3D"#" rel=3D"nofollow">+852 67890601</a>=
+<br>
+=E5=AF=86=E7=A2=BC=EF=BC=9Aaaa111</p>
+<hr>
+<p><br>
+annie.yang+no11@shoalter.com/Qwe123<span class=3D"status-macro aui-lozenge =
+aui-lozenge-complete">HKTVMALL</span><span class=3D"status-macro aui-lozeng=
+e aui-lozenge-error">SUPPORT CHAT</span><br>
+celina.lin+03@shoalter.com / Qwe123<span class=3D"status-macro aui-lozenge =
+aui-lozenge-complete">HKTVMALL</span><span class=3D"status-macro aui-lozeng=
+e aui-lozenge-error">SUPPORT CHAT</span><br><br><br><a class=3D"external-li=
+nk" href=3D"mailto:hylau+101@shoalter.com" rel=3D"nofollow">hylau+101@shoal=
+ter.com</a> / Rrrrrr1 <span class=3D"status-macro aui-lozenge aui-lozenge-c=
+omplete">HKTVMALL</span><span class=3D"status-macro aui-lozenge aui-lozenge=
+-error">SUPPORT CHAT</span></p>
+<p>appTest001 / Qwer1234 <br><br>
+edith+EESEUSER / Qwe1234 <span class=3D"status-macro aui-lozenge aui-lozeng=
+e-complete">HKTVMALL</span><span class=3D"status-macro aui-lozenge aui-loze=
+nge-error">SUPPORT CHAT</span><br><br><a class=3D"external-link" href=3D"ma=
+ilto:cindy.yeh+5@shoalter.com" rel=3D"nofollow">cindy.yeh+5@shoalter.com</a=
+> / HTtv2023 <span class=3D"status-macro aui-lozenge aui-lozenge-current">T=
+HE PLACE</span><span class=3D"status-macro aui-lozenge aui-lozenge-success"=
+>CUSTOMER CHAT</span></p>
+<p><a class=3D"external-link" href=3D"mailto:jocelyn.tseng@shoalter.com" re=
+l=3D"nofollow">jocelyn.tseng@shoalter.com</a> / HTtv2023 <span class=3D"sta=
+tus-macro aui-lozenge aui-lozenge-current">THE PLACE</span><span class=3D"s=
+tatus-macro aui-lozenge aui-lozenge-success">CUSTOMER CHAT</span><br><br>
+Merchant Operator role<br>
+w071302 /Qwe123 <span class=3D"status-macro aui-lozenge aui-lozenge-progres=
+s">OPERATOR ROLE</span><br><br>
+Change role from Merchant to Merchant Operator <br>
+w0713 /Qwe123 <span class=3D"status-macro aui-lozenge aui-lozenge-progress"=
+>OPERATOR ROLE</span></p>
+<p>tpl0201/Qwe123<br><br><a class=3D"external-link" href=3D"https://rrmp-co=
+mms-dev.gcp.hkmpcl.com.hk/ratings_reviews" rel=3D"nofollow">Community</a><b=
+r>
+User: COMMS_ADMIN, COMMS_CS, COMMS_CES, COMMS_PD_MARKETING, COMMS_CS_INS &l=
+t;-----admin, CS, CEM, MKT, CS Insurance<br>
+Password: cs123456<br><br>
+User: comms_shopinshop_merchant &lt;- merchant<br>
+Password: Qwe123<br><br>
+User: rrr_buysell_mer01 &lt;- merchant(virtual store)<br>
+Password: Asd123</p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>twapp-staging</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://twappconfig.blob.core.windows=
+.net/config/staging/config.json" rel=3D"nofollow">https://twappconfig.blob.=
+core.windows.net/config/staging/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"mailto:celina.lin+01@shoalter.com" re=
+l=3D"nofollow">celina.lin+01@shoalter.com</a>&nbsp;/ Qwe123<br>
+&nbsp;<a class=3D"external-link" href=3D"mailto:jason.sung@shoalter.com" re=
+l=3D"nofollow">jason.sung@shoalter.com</a> / <code>Qwe123</code></p>
+<p>gary+mer / <code>Qwe12345</code></p>
+<p><a class=3D"external-link" href=3D"mailto:megan.lin+041803@shoalter.com"=
+ rel=3D"nofollow">megan.lin+041803@shoalter.com</a> / Aa123456</p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>twapp-production</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://twappconfig.blob.core.windows=
+.net/config/production/config.json" rel=3D"nofollow">https://twappconfig.bl=
+ob.core.windows.net/config/production/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p>here could modify by ourselves during development testing</p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>apps-staging (here is pre-production)</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://apps-staging.hkmpcl.com.hk/co=
+nfig/mms/config.json" rel=3D"nofollow">https://apps-staging.hkmpcl.com.hk/c=
+onfig/mms/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p>here is pre-production, will deploy to here firstly, testing well, then =
+request NOC really deploy to production</p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>production</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://apps.hktvmall.com/config/mms/=
+config.json" rel=3D"nofollow">https://apps.hktvmall.com/config/mms/config.j=
+son</a></p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://merchant.shoalter.com/home" r=
+el=3D"nofollow">https://merchant.shoalter.com/home</a></p></td>
+<td class=3D"confluenceTd">
+<p>merchant role: merchant_1 / HKtv2023! <br>
+warehouse role: W1024/Qwe123<br><br>
+# for push test<br>
+merchant app<br><a class=3D"external-link" href=3D"mailto:ymng@hktv.com.hk"=
+ rel=3D"nofollow">ymng@hktv.com.hk</a><br>
+Ib2023<br><br>
+hktvmall<br><a class=3D"external-link" href=3D"mailto:uat4000@hkmpcl.com.hk=
+" rel=3D"nofollow">uat4000@hkmpcl.com.hk</a><br><code>ABcd1234</code><br><b=
+r>
+LM prod account<br>
+Login name:&nbsp;<a class=3D"external-link" href=3D"mailto:ymwong+1@shoalte=
+r.com" rel=3D"nofollow">ymwong+1@shoalter.com</a><br>
+Password: HKtv2022!</p></td>
+<td class=3D"confluenceTd">
+<p>here is the one used by Released app</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></p>
+<p></p>
+<p></p>
+<div class=3D"table-wrap">
+<table data-table-width=3D"1800" data-layout=3D"full-width" data-local-id=
+=3D"de7df591-bb73-466e-a65a-f3c7136d409c" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 268.0px;">
+<col style=3D"width: 442.0px;">
+<col style=3D"width: 377.0px;">
+<col style=3D"width: 389.0px;">
+<col style=3D"width: 324.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>Carton App</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>App Config</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Web Url</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Accounts</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Remark</strong></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>dev</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://twappconfig.blob.core.windows=
+.net/hktv3pl/config/dev/config.json" rel=3D"nofollow">https://twappconfig.b=
+lob.core.windows.net/hktv3pl/config/dev/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://mwms-whtsy-dev.hkmpcl.com.hk/=
+hktv_ty_mwms/" rel=3D"nofollow">https://mwms-whtsy-dev.hkmpcl.com.hk/hktv_t=
+y_mwms/</a></p></td>
+<td class=3D"confluenceTd">
+<p>Account : TYWMS.TestAPP1<br>
+Password : 1qaz@WSX<br><br>
+Account : TYWMS.TestAPP2<br>
+Password : 1qaz@WSX</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" data-card-appearance=3D"inline" href=3D"https=
+://docs.google.com/spreadsheets/d/1JBzcwLvrZlelf09jpo3BI-B8i_uNDl8vInDJuYGt=
+jZw/edit#gid=3D715023905" rel=3D"nofollow">https://docs.google.com/spreadsh=
+eets/d/1JBzcwLvrZlelf09jpo3BI-B8i_uNDl8vInDJuYGtjZw/edit#gid=3D715023905</a=
+></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>twapp-staging</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://twappconfig.blob.core.windows=
+.net/hktv3pl/config/staging/config.json" rel=3D"nofollow">https://twappconf=
+ig.blob.core.windows.net/hktv3pl/config/staging/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://mwms-whtsy-staging.hkmpcl.com=
+.hk/hktv_ty_mwms/" rel=3D"nofollow">https://mwms-whtsy-staging.hkmpcl.com.h=
+k/hktv_ty_mwms/</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>twapp-production</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://twappconfig.blob.core.windows=
+.net/hktv3pl/config/production/config.json" rel=3D"nofollow">https://twappc=
+onfig.blob.core.windows.net/hktv3pl/config/production/config.json</a></p></=
+td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://mwms-whtsy.shoalter.com/hktv_=
+ty_mwms/" rel=3D"nofollow">https://mwms-whtsy.shoalter.com/hktv_ty_mwms/</a=
+></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p>here could modify by ourselves during development testing</p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>apps-staging (here is pre-production)</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://apps-staging.hkmpcl.com.hk/co=
+nfig/hktvtpl/config.json" rel=3D"nofollow">https://apps-staging.hkmpcl.com.=
+hk/config/hktvtpl/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p>here is pre-production, will deploy to here firstly, testing well, then =
+request NOC really deploy to production</p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>production</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://apps.hktvmall.com/config/hktv=
+tpl/config.json" rel=3D"nofollow">https://apps.hktvmall.com/config/hktvtpl/=
+config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p>here is the one used by Released app</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></p>
+<p></p>
+<p></p>
+<div class=3D"table-wrap">
+<table data-table-width=3D"960" data-layout=3D"wide" data-local-id=3D"fc40d=
+2a6-1e46-4bbd-a20f-2179cbe067aa" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 117.0px;">
+<col style=3D"width: 404.0px;">
+<col style=3D"width: 299.0px;">
+<col style=3D"width: 140.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>HKTVmall</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Url</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>Web Url</strong></p></th>
+<th class=3D"confluenceTh">
+<p></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>config-www</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://appconfighost.z13.web.core.wi=
+ndows.net/config/hktvmall/config-www.json" rel=3D"nofollow">https://appconf=
+ighost.z13.web.core.windows.net/config/hktvmall/config-www.json</a></p></td=
+>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>config-stagewww</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://appconfighost.z13.web.core.wi=
+ndows.net/config/hktvmall/config-stagewww.json" rel=3D"nofollow">https://ap=
+pconfighost.z13.web.core.windows.net/config/hktvmall/config-stagewww.json</=
+a></p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://www.hkmpcl.com.hk/" rel=3D"no=
+follow">https://www.hkmpcl.com.hk/</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>config-test</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://appconfighost.z13.web.core.wi=
+ndows.net/config/hktvmall/config-test.json" rel=3D"nofollow">https://appcon=
+fighost.z13.web.core.windows.net/config/hktvmall/config-test.json</a></p></=
+td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://ecomtest01.hktv.com.hk/" rel=
+=3D"nofollow">https://ecomtest01.hktv.com.hk/</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>config-dev</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://appconfighost.z13.web.core.wi=
+ndows.net/config/hktvmall/config-dev.json" rel=3D"nofollow">https://appconf=
+ighost.z13.web.core.windows.net/config/hktvmall/config-dev.json</a></p></td=
+>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>app staging</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://apps-staging.hkmpcl.com.hk/co=
+nfig/config.json" rel=3D"nofollow">https://apps-staging.hkmpcl.com.hk/confi=
+g/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>prod</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://apps.hktvmall.com/config/conf=
+ig.json" rel=3D"nofollow">https://apps.hktvmall.com/config/config.json</a><=
+/p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"mailto:tony.hokan@gmail.com" rel=3D"n=
+ofollow">tony.hokan@gmail.com</a><br>
+Shoalter2023<br>
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94<br><a class=3D"external-link" href=3D"mailto:epang=
++testgroupchat@hktv.com.hk" rel=3D"nofollow">epang+testgroupchat@hktv.com.h=
+k</a><br>
+HKTVmall2024(=E7=84=A1=E6=B3=95=E7=99=BB=E5=85=A5)</p>
+<p>=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=
+=E2=80=94=E2=80=94=E2=80=94<br><a class=3D"external-link" href=3D"mailto:ya=
+nyan0328@hotmail.com" rel=3D"nofollow">yanyan0328@hotmail.com</a></p>
+<p>HKTVmall2024<br><br>
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94<br><a class=3D"external-link" href=3D"mailto:ITE-T=
+esting@shoalter.com" rel=3D"nofollow">ITE-Testing@shoalter.com</a></p>
+<p>qwe123<br>
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94<br><a class=3D"external-link" href=3D"mailto:takpi=
+u@hktv.com.hk" rel=3D"nofollow">takpiu@hktv.com.hk</a></p>
+<p>qwer1234<br>
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=
+=80=94=E2=80=94=E2=80=94<br>
+57072778<br>
+qwert12345<br>
+(admin in HKTV=E8=91=97=E6=95=B8=E7=BE=A4)<br><br>
+test chatroom</p>
+<p>=E5=88=86=E4=BA=AB=E4=B8=80=E5=80=8B=E7=BE=A4=E7=B5=84=E7=B5=A6=E4=BD=A0=
+=EF=BC=9AHKTV=E8=91=97=E6=95=B8=E7=BE=A4<br><a class=3D"external-link" href=
+=3D"https://www.hktvmall.com/groupchat/chatroom/31" rel=3D"nofollow">https:=
+//www.hktvmall.com/groupchat/chatroom/31</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></p>
+<p></p>
+<div class=3D"table-wrap">
+<table data-table-width=3D"960" data-layout=3D"wide" data-local-id=3D"c3f47=
+198-214a-4015-bb01-e7120b8487a8" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 150.0px;">
+<col style=3D"width: 375.0px;">
+<col style=3D"width: 435.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>HKTVmall Lite</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>ios</strong></p></th>
+<th class=3D"confluenceTh">
+<p><strong>android</strong></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>prod</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://apps.hktvmall.com/config/hktv=
+malllite/config.json" rel=3D"nofollow">https://apps.hktvmall.com/config/hkt=
+vmalllite/config.json</a></p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://apps.hktvmall.com/config/hktv=
+malllite/config.json" rel=3D"nofollow">https://apps.hktvmall.com/config/hkt=
+vmalllite/config-a.json</a></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></p>
+<div class=3D"table-wrap">
+<table data-table-width=3D"960" data-layout=3D"wide" data-local-id=3D"5d64c=
+873-978c-443c-b82a-396631384f33" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 150.0px;">
+<col style=3D"width: 375.0px;">
+<col style=3D"width: 435.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>CTM</strong></p></th>
+<th class=3D"confluenceTh">
+<p></p></th>
+<th class=3D"confluenceTh">
+<p></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>Testing</p></td>
+<td class=3D"confluenceTd">
+<p>69191330<br>
+66660002<br>
+66660003</p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+<td class=3D"confluenceTd">
+<p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></p>
+<p></p>
+<div class=3D"table-wrap">
+<table data-table-width=3D"960" data-layout=3D"wide" data-local-id=3D"0b452=
+a31-c307-4ab2-a385-451cfcb8e943" class=3D"confluenceTable">
+<colgroup>
+<col style=3D"width: 150.0px;">
+<col style=3D"width: 375.0px;">
+<col style=3D"width: 435.0px;">
+</colgroup>
+<tbody>
+<tr>
+<th class=3D"confluenceTh">
+<p><strong>exchange</strong></p></th>
+<th class=3D"confluenceTh">
+<p></p></th>
+<th class=3D"confluenceTh">
+<p></p></th>
+</tr>
+<tr>
+<td class=3D"confluenceTd">
+<p>Testing</p></td>
+<td class=3D"confluenceTd">
+<p><a class=3D"external-link" href=3D"https://testexchange.hktv.com.hk/merc=
+hant/shared/loginform.php" rel=3D"nofollow">https://testexchange.hktv.com.h=
+k/merchant/shared/loginform.php</a></p></td>
+<td class=3D"confluenceTd">
+<p>admin<br>
+tvMagic88</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+    </div>
+</body>
+</html>
+------=_Part_12_629094409.1730791135762--

@@ -1,0 +1,447 @@
+Message-ID: <101667761.15.1730791255514@a506c25a76b9>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_14_477913446.1730791255514"
+
+------=_Part_14_477913446.1730791255514
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>Handling Privacy Policy</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>Handling Privacy Policy</h1>
+    <div class=3D"Section1">
+        <h2 id=3D"HandlingPrivacyPolicy-Subject">Subject</h2>
+<ul>
+<li>
+<p>App / Third-party SDK may need to provide <code>Privacy Manifest files</=
+code>, if:</p>
+<ul>
+<li>
+<p>it uses SDKs in the <a class=3D"external-link" href=3D"https://developer=
+.apple.com/support/third-party-SDK-requirements/#:~:text=3Dinclude%20the%20=
+privacy%20manifest%20for%20any%20SDK%20listed%20below" rel=3D"nofollow">lis=
+t</a></p></li>
+<li>
+<p>it uses <code>Required Reason APIs</code></p></li>
+</ul></li>
+<li>
+<p>Third-party SDKs need to provide their own privacy manifest files. Our a=
+pp=E2=80=99s privacy manifest file doesn=E2=80=99t need to cover data colle=
+cted by third-party SDKs that our app links to. [<a class=3D"external-link"=
+ href=3D"https://developer.apple.com/documentation/bundleresources/privacy_=
+manifest_files/describing_data_use_in_privacy_manifests#:~:text=3DThird%2Dp=
+arty%20SDKs%20need%20to%20provide%20their%20own%20privacy%20manifest%20file=
+s%20that%20record%20the%20types%20of%20data%20they%20collect.%20Your%20app%=
+E2%80%99s%20privacy%20manifest%20file%20doesn%E2%80%99t%20need%20to%20cover=
+%20data%20collected%20by%20third%2Dparty%20SDKs%20that%20your%20app%20links=
+%20to." rel=3D"nofollow">ref</a>]</p></li>
+</ul>
+<h2 id=3D"HandlingPrivacyPolicy-Terminology">Terminology</h2>
+<ul>
+<li>
+<p><code>Privacy Manifest files</code>:</p>
+<ul>
+<li>
+<p>files that describe for your app or third-party SDK:</p>
+<ul>
+<li>
+<p>the <em><strong>data</strong></em> it collects and</p></li>
+<li>
+<p>the <em><strong>reasons required APIs</strong></em> it uses.</p></li>
+</ul></li>
+</ul></li>
+<li>
+<p><code>Required Reason API</code>: the api that access device signals, ne=
+eds reason to use to avoid <code>Fingerprinting</code> (use device signals =
+to try to identify device / user)</p>
+<ul>
+<li>
+<p>including <code>UserDefaults</code></p></li>
+</ul></li>
+<li>
+<p><code>Tracking Domains</code>: a list of domains that will be blocked wh=
+en user ask app not to track</p></li>
+<li>
+<p><code>Digital Signature</code>:</p>
+<ul>
+<li>
+<p>required if where the SDKs are used as binary dependencies.</p></li>
+</ul></li>
+<li>
+<p><code>Privacy Report</code></p>
+<ul>
+<li>
+<p>a report Xcode 15 generates [<a class=3D"external-link" href=3D"https://=
+developer.apple.com/documentation/bundleresources/privacy_manifest_files/de=
+scribing_data_use_in_privacy_manifests#4239187" rel=3D"nofollow">steps</a>]=
+</p></li>
+<li>
+<p>it can be used to review our app privacy status</p>
+<ul>
+<li>
+<p>check if our SDK is inside</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id=3D"HandlingPrivacyPolicy-Impact">Impact</h2>
+<ul>
+<li>
+<p>App Developer (HKTVmall, HKTV mms=E2=80=A6)</p>
+<ul>
+<li>
+<p>ask for Privacy Manifest from SDK author</p></li>
+<li>
+<p>refer to Xcode <code>Privacy Report</code> before submitting app</p></li=
+>
+</ul></li>
+<li>
+<p>SDK Developer (ShoalterGroupChat)</p>
+<ul>
+<li>
+<p>adopt digital signature and privacy manifest files</p></li>
+</ul></li>
+<li>
+<p>All Developer</p>
+<ul>
+<li>
+<p>complete <code>Tracking Domains</code> list</p></li>
+<li>
+<p>required reason api</p></li>
+</ul></li>
+</ul>
+<h2 id=3D"HandlingPrivacyPolicy-Steps">Steps</h2>
+<ol start=3D"1">
+<li>
+<p>Steps for creating<code>Privacy Manifest files</code>:</p>
+<ol start=3D"1">
+<li>
+<p>SDK developer:</p>
+<ol start=3D"1">
+<li>
+<p><a class=3D"external-link" href=3D"https://developer.apple.com/documenta=
+tion/bundleresources/privacy_manifest_files#4284009" rel=3D"nofollow">for .=
+xcframworks</a> (for binary SDK)</p></li>
+<li>
+<p><a class=3D"external-link" href=3D"https://apnspush.com/add-privacy-mani=
+fest-sdk" rel=3D"nofollow">for Cocoapods SDK</a></p></li>
+</ol></li>
+<li>
+<p><a class=3D"external-link" href=3D"https://developer.apple.com/documenta=
+tion/bundleresources/privacy_manifest_files#4284009" rel=3D"nofollow">App D=
+eveloper</a></p></li>
+</ol></li>
+<li>
+<p>Use Xcode Privacy Report to exam if setting correctly</p></li>
+</ol>
+<p></p>
+<h2 id=3D"HandlingPrivacyPolicy-Discussion">Discussion</h2>
+<ul>
+<li>
+<p>App using old SDK:</p>
+<ul>
+<li>
+<p>Alamofire not going to provide Privacy Manifest files for Alamofire 4 (c=
+urrently 5)</p>
+<ul>
+<li>
+<p><a class=3D"external-link" href=3D"https://github.com/Alamofire/Alamofir=
+e/pull/3792" rel=3D"nofollow">their reasons</a></p>
+<ul>
+<li>
+<p>they doubt apple will ask old dependancies to add privacy manifest</p></=
+li>
+<li>
+<p>only 5 have access <code>Required Reason Api</code>: <code>systemUptime<=
+/code></p></li>
+<li>
+<p>they said if anyone submitting with warning, contact them, they will cla=
+rify with Apple</p></li>
+</ul></li>
+</ul></li>
+<li>
+<p>SnapKit updated with new version with Privacy Manifest, but not support =
+Cocoapod yet. [<a class=3D"external-link" href=3D"https://github.com/SnapKi=
+t/SnapKit/issues/786" rel=3D"nofollow">issue</a>]</p></li>
+</ul></li>
+<li>
+<p><a class=3D"external-link" href=3D"https://github.com/google/promises/pu=
+ll/226#discussion_r1447871477" rel=3D"nofollow">How Google do it</a>, possi=
+bly an idea for importing GroupChat to HKTV mms without setting <code>use_f=
+rameworks</code></p></li>
+</ul>
+<h2 id=3D"HandlingPrivacyPolicy-Note:">Note:</h2>
+<ul>
+<li>
+<p>Starts from May 1, 2024, app store connect will reject apps using <code>=
+Required Reason APIs</code> without proper <code>Privacy Manifest files</co=
+de></p></li>
+<li>
+<p>SDK developer needs to adopt digital <code>Signature</code>(binary SDK) =
+and <code>Privacy Manifest</code></p></li>
+</ul>
+<h2 id=3D"HandlingPrivacyPolicy-Reference">Reference</h2>
+<ul>
+<li>
+<p><a class=3D"external-link" data-card-appearance=3D"inline" href=3D"https=
+://developer.apple.com/support/third-party-SDK-requirements/" rel=3D"nofoll=
+ow">https://developer.apple.com/support/third-party-SDK-requirements/</a></=
+p></li>
+<li>
+<p><a class=3D"external-link" data-card-appearance=3D"inline" href=3D"https=
+://developer.apple.com/documentation/bundleresources/privacy_manifest_files=
+#4284009" rel=3D"nofollow">https://developer.apple.com/documentation/bundle=
+resources/privacy_manifest_files#4284009</a></p></li>
+<li>
+<p><a class=3D"external-link" data-card-appearance=3D"inline" href=3D"https=
+://developer.apple.com/documentation/bundleresources/privacy_manifest_files=
+/describing_data_use_in_privacy_manifests" rel=3D"nofollow">https://develop=
+er.apple.com/documentation/bundleresources/privacy_manifest_files/describin=
+g_data_use_in_privacy_manifests</a></p></li>
+<li>
+<p><a class=3D"external-link" href=3D"https://developer.apple.com/documenta=
+tion/bundleresources/privacy_manifest_files/describing_use_of_required_reas=
+on_api" rel=3D"nofollow">https://developer.apple.com/documentation/bundlere=
+sources/privacy_manifest_files/describing_use_of_required_reason_api</a></p=
+></li>
+<li>
+<p><a class=3D"external-link" data-card-appearance=3D"inline" href=3D"https=
+://developer.apple.com/videos/play/wwdc2023/10060/" rel=3D"nofollow">https:=
+//developer.apple.com/videos/play/wwdc2023/10060/</a></p></li>
+<li>
+<p><a class=3D"external-link" data-card-appearance=3D"inline" href=3D"https=
+://developer.apple.com/videos/play/wwdc2023/10061/" rel=3D"nofollow">https:=
+//developer.apple.com/videos/play/wwdc2023/10061/</a></p></li>
+<li>
+<p><a class=3D"external-link" data-card-appearance=3D"inline" href=3D"https=
+://developer.apple.com/forums/thread/733537" rel=3D"nofollow">https://devel=
+oper.apple.com/forums/thread/733537</a></p></li>
+<li>
+<p><a class=3D"external-link" data-card-appearance=3D"inline" href=3D"https=
+://github.com/Alamofire/Alamofire/pull/3792" rel=3D"nofollow">https://githu=
+b.com/Alamofire/Alamofire/pull/3792</a></p></li>
+</ul>
+    </div>
+</body>
+</html>
+------=_Part_14_477913446.1730791255514--

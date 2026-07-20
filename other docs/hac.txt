@@ -1,0 +1,1432 @@
+// ==UserScript==
+// @name        HAC Extension
+// @namespace   Violentmonkey Scripts
+// @match       https://localhost:9112/hac/*
+// @match       https://*.hkmpcl.com.hk/hac/*
+// @grant       none
+// @version     1.16
+// @author      Bowie Lam
+// @description 9/23/2023, 2:38:03 PM
+// ==/UserScript==
+
+// Constants for future usages!
+const EXTENSION_SECTIONS = [];
+
+const HAC_EXT_DEFAULT_SEARCH_USER_GROUP_PK = "9064626978820";
+const HAC_EXT_DEFAULT_ADD_TIMESLOT_DAYS = 14;
+const HAC_EXT_DEFAULT_ADD_TIMESLOT_DZONE_ID = "KN029-4";
+
+/** Same stack as the scratch textarea; used for inputs so placeholders match. */
+const HAC_EXT_INPUT_FONT_FAMILY = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+
+/** Dark blue: tools, filters, pin, Hover tab, toast. */
+const HAC_EXT_DARK_BLUE = "#0f172a";
+
+/** Uniform vertical/horizontal gap between stacked fields and under section actions (px). */
+const HAC_EXT_STACK_GAP = "8px";
+
+/** Dividers between tool sections, toolbar, and scratch (slate-500). */
+const HAC_EXT_SEPARATOR = "#64748b";
+
+const HAC_EXT_PANEL_MIN_WIDTH_PX = 560;
+const HAC_EXT_HOVER_CLOSE_GRACE_MS = 700;
+const HAC_EXT_COPY_TOAST_MS = 2200;
+
+const HAC_EXT_DEFAULT_ADD_STOCK_PRODUCT = "K0128001_S_5";
+
+function hacExtStoragePrefix() {
+  return `hacExt:v1:${location.hostname}:`;
+}
+
+function hacExtFieldKey(sectionId, argIndex) {
+  return `${hacExtStoragePrefix()}field:${sectionId}:${argIndex}`;
+}
+
+function hacExtPinnedKey() {
+  return `${hacExtStoragePrefix()}pinned`;
+}
+
+function hacExtLoadPinned() {
+  try {
+    return localStorage.getItem(hacExtPinnedKey()) === "true";
+  } catch (_) {
+    return false;
+  }
+}
+
+function hacExtSavePinned(pinned) {
+  try {
+    localStorage.setItem(hacExtPinnedKey(), pinned ? "true" : "false");
+  } catch (_) {}
+}
+
+function hacExtFilterKey() {
+  return `${hacExtStoragePrefix()}filter`;
+}
+
+function hacExtScratchKey() {
+  return `${hacExtStoragePrefix()}scratch`;
+}
+
+const HAC_EXT_FILTER_IDS = ["fsql", "impex", "groovy"];
+
+/** `null` = show all sections; otherwise exactly one of fsql | impex | groovy. */
+function hacExtLoadFilterId() {
+  const allowed = new Set(HAC_EXT_FILTER_IDS);
+  try {
+    const v = localStorage.getItem(hacExtFilterKey());
+    if (v == null || v === "" || v === "all") return null;
+    if (v.startsWith("[")) {
+      const arr = JSON.parse(v);
+      if (Array.isArray(arr)) {
+        for (const x of arr) {
+          if (allowed.has(x)) return x;
+        }
+        return null;
+      }
+    }
+    if (allowed.has(v)) return v;
+  } catch (_) {}
+  return null;
+}
+
+function hacExtSaveFilterId(id) {
+  try {
+    if (id == null || !HAC_EXT_FILTER_IDS.includes(id)) {
+      localStorage.setItem(hacExtFilterKey(), "");
+    } else {
+      localStorage.setItem(hacExtFilterKey(), id);
+    }
+  } catch (_) {}
+}
+
+function hacExtLoadScratch() {
+  try {
+    return localStorage.getItem(hacExtScratchKey());
+  } catch (_) {
+    return null;
+  }
+}
+
+function hacExtSaveScratch(value) {
+  try {
+    localStorage.setItem(hacExtScratchKey(), value);
+  } catch (_) {}
+}
+
+function hacExtLoadField(sectionId, argIndex) {
+  try {
+    return localStorage.getItem(hacExtFieldKey(sectionId, argIndex));
+  } catch (_) {
+    return null;
+  }
+}
+
+function hacExtSaveField(sectionId, argIndex, value) {
+  try {
+    localStorage.setItem(hacExtFieldKey(sectionId, argIndex), value);
+  } catch (_) {}
+}
+
+function hacExtClearSectionFields(sectionId, argCount) {
+  for (let i = 0; i < argCount; i++) {
+    try {
+      localStorage.removeItem(hacExtFieldKey(sectionId, i));
+    } catch (_) {}
+  }
+}
+
+/** Debounced save on input; uses _hacExtSaveT on the element. */
+function hacExtAttachFieldPersistence(inputEl, sectionId, argIndex) {
+  const saved = hacExtLoadField(sectionId, argIndex);
+  if (saved != null) inputEl.value = saved;
+
+  inputEl.addEventListener("input", () => {
+    clearTimeout(inputEl._hacExtSaveT);
+    inputEl._hacExtSaveT = setTimeout(() => {
+      hacExtSaveField(sectionId, argIndex, inputEl.value);
+    }, 300);
+  });
+}
+
+/** Title-style labels for placeholders: camelCase → words, then capitalize each token. */
+function hacExtDisplayLabel(raw) {
+  if (raw == null || raw === "") return "";
+  const spaced = String(raw).replace(/([a-z])([A-Z])/g, "$1 $2");
+  return spaced
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(" ");
+}
+
+/** Placeholder like "User Pk (9064626978820)" when the callback uses a default for empty input. */
+function hacExtPlaceholderWithDefault(rawField, defaultValue) {
+  const base = hacExtDisplayLabel(rawField);
+  if (defaultValue == null || defaultValue === "") return base;
+  return `${base} (${defaultValue})`;
+}
+
+const HAC_EXT_STYLES = {
+  section: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    width: "100%",
+    boxSizing: "border-box",
+    gap: HAC_EXT_STACK_GAP,
+  },
+  toolbarRow: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "stretch",
+    gap: HAC_EXT_STACK_GAP,
+    width: "100%",
+    boxSizing: "border-box",
+  },
+  primaryButton: {
+    flex: "3 1 0",
+    minWidth: "0",
+    margin: "0",
+    boxSizing: "border-box",
+    padding: "8px 10px",
+    cursor: "pointer",
+    borderRadius: "6px",
+    border: `1px solid ${HAC_EXT_DARK_BLUE}`,
+    background: HAC_EXT_DARK_BLUE,
+    color: "#ffffff",
+    fontWeight: "600",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    lineHeight: "1.25",
+    fontFamily: "inherit",
+    fontSize: "13px",
+  },
+  resetButton: {
+    flex: "1 1 0",
+    minWidth: "0",
+    margin: "0",
+    boxSizing: "border-box",
+    padding: "8px 8px",
+    border: "1px solid #e5e7eb",
+    borderRadius: "6px",
+    background: "#f3f4f6",
+    color: "#374151",
+    cursor: "pointer",
+    fontSize: "12px",
+    fontWeight: "500",
+    fontFamily: "inherit",
+    textDecoration: "none",
+    lineHeight: "1.25",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+  textInput: {
+    width: "100%",
+    boxSizing: "border-box",
+    margin: "0",
+    padding: "6px 8px",
+    border: "1px solid #494949",
+    borderRadius: "4px",
+    background: "#ffffff",
+    color: "#111111",
+    fontFamily: HAC_EXT_INPUT_FONT_FAMILY,
+    fontSize: "12px",
+    lineHeight: "1.4",
+  },
+  splitInput: {
+    flex: "1 1 0",
+    minWidth: "0",
+    width: "100%",
+    boxSizing: "border-box",
+    margin: "0",
+    padding: "6px 8px",
+    border: "1px solid #494949",
+    borderRadius: "4px",
+    background: "#ffffff",
+    color: "#111111",
+    fontFamily: HAC_EXT_INPUT_FONT_FAMILY,
+    fontSize: "12px",
+    lineHeight: "1.4",
+  },
+};
+
+function hacExtApplyStyles(el, map) {
+  Object.assign(el.style, map);
+}
+
+function hacExtSyncSectionSeparators() {
+  let firstVisible = true;
+  for (const sectionEl of EXTENSION_SECTIONS) {
+    if (sectionEl.style.display === "none") continue;
+    if (firstVisible) {
+      sectionEl.style.borderTop = "";
+      sectionEl.style.paddingTop = "";
+      sectionEl.style.marginTop = "";
+      firstVisible = false;
+    } else {
+      sectionEl.style.borderTop = `1px solid ${HAC_EXT_SEPARATOR}`;
+      sectionEl.style.paddingTop = "10px";
+      sectionEl.style.marginTop = "2px";
+    }
+  }
+}
+
+function hacExtApplySectionFilter(activeId) {
+  const showAll = activeId == null;
+  for (const sectionEl of EXTENSION_SECTIONS) {
+    const tag = sectionEl.dataset.hacFilter;
+    const show = showAll || tag === activeId;
+    // Empty string clears inline display → computed `block`, so `gap` on sections stops working.
+    if (show) {
+      sectionEl.style.display = "flex";
+      sectionEl.style.flexDirection = "column";
+      sectionEl.style.alignItems = "stretch";
+      sectionEl.style.width = "100%";
+      sectionEl.style.boxSizing = "border-box";
+      sectionEl.style.gap = HAC_EXT_STACK_GAP;
+    } else {
+      sectionEl.style.display = "none";
+    }
+  }
+  hacExtSyncSectionSeparators();
+}
+
+/** Debounced save for scratch textarea; uses _hacExtSaveT on the element. */
+function hacExtAttachScratchPersistence(textareaEl) {
+  const saved = hacExtLoadScratch();
+  if (saved != null) textareaEl.value = saved;
+
+  textareaEl.addEventListener("input", () => {
+    clearTimeout(textareaEl._hacExtSaveT);
+    textareaEl._hacExtSaveT = setTimeout(() => {
+      hacExtSaveScratch(textareaEl.value);
+    }, 300);
+  });
+}
+
+function hacExtSectionHasValues(sectionEl) {
+  for (const input of sectionEl.querySelectorAll("input")) {
+    if (input.value.trim() !== "") return true;
+  }
+  return false;
+}
+
+function hacExtSyncSectionResetVisibility(sectionEl, resetBtn) {
+  if (!resetBtn) return;
+  resetBtn.style.display = hacExtSectionHasValues(sectionEl) ? "" : "none";
+}
+
+function hacExtApplyPinButtonUi(pinBtn, pinned) {
+  pinBtn.textContent = pinned ? "Pinned" : "Pin";
+  pinBtn.setAttribute("aria-pressed", String(pinned));
+  pinBtn.setAttribute(
+    "aria-label",
+    pinned ? "Panel is pinned; stays open when not hovering" : "Pin panel open when not hovering"
+  );
+  if (pinned) {
+    pinBtn.style.background = HAC_EXT_DARK_BLUE;
+    pinBtn.style.color = "#ffffff";
+    pinBtn.style.borderColor = HAC_EXT_DARK_BLUE;
+  } else {
+    pinBtn.style.background = "#ffffff";
+    pinBtn.style.color = HAC_EXT_DARK_BLUE;
+    pinBtn.style.borderColor = HAC_EXT_DARK_BLUE;
+  }
+}
+
+function hacExtEnsureGlobalStyles() {
+  if (document.getElementById("hacExtensionGlobalStyles")) return;
+  const s = document.createElement("style");
+  s.id = "hacExtensionGlobalStyles";
+  s.textContent = `#hacExtension input::placeholder,#hacExtension textarea::placeholder{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;opacity:0.55;}`;
+  document.head.appendChild(s);
+}
+
+let hacExtCopyToastTimer = null;
+
+async function hacExtCopyWithToast(text) {
+  await navigator.clipboard.writeText(text);
+  hacExtFlashCopyToast();
+}
+
+function hacExtFlashCopyToast() {
+  let el = document.getElementById("hacExtensionCopyToast");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "hacExtensionCopyToast";
+    el.setAttribute("role", "status");
+    el.setAttribute("aria-live", "polite");
+    el.textContent = "Copied to clipboard";
+    Object.assign(el.style, {
+      position: "fixed",
+      left: "50%",
+      bottom: "24px",
+      transform: "translateX(-50%) translateY(10px)",
+      zIndex: "2147483646",
+      padding: "10px 18px",
+      borderRadius: "8px",
+      background: HAC_EXT_DARK_BLUE,
+      color: "#ffffff",
+      fontFamily: "system-ui, -apple-system, Segoe UI, sans-serif",
+      fontSize: "13px",
+      fontWeight: "500",
+      boxShadow: "0 4px 24px rgba(0, 0, 0, 0.22)",
+      pointerEvents: "none",
+      opacity: "0",
+      transition: "opacity 0.22s ease, transform 0.22s ease",
+    });
+    document.body.appendChild(el);
+  }
+  clearTimeout(hacExtCopyToastTimer);
+  void el.offsetHeight;
+  el.style.opacity = "1";
+  el.style.transform = "translateX(-50%) translateY(0)";
+  hacExtCopyToastTimer = window.setTimeout(() => {
+    el.style.opacity = "0";
+    el.style.transform = "translateX(-50%) translateY(10px)";
+    hacExtCopyToastTimer = null;
+  }, HAC_EXT_COPY_TOAST_MS);
+}
+
+function hacExtResetAllSections() {
+  for (const sectionEl of EXTENSION_SECTIONS) {
+    const inputs = sectionEl.querySelectorAll("input");
+    for (const input of inputs) {
+      input.value = "";
+      input.disabled = false;
+    }
+    hacExtClearSectionFields(sectionEl.id, inputs.length);
+    const resetBtn = sectionEl.querySelector("[data-hac-section-reset]");
+    hacExtSyncSectionResetVisibility(sectionEl, resetBtn);
+  }
+}
+
+// Please put your extension here!
+//
+// Documentation
+// name - type: string | description: the name will be shown on the button, and the element id will be the camelCase version of the name
+// args - type: string[] | description: an input for variables used in the callback, the element id will be `name in camelCase + Arg[$idx]` where $idx starts from 0 | optional: true (leave it as empty array)
+// callback - type function | description: the callback function triggered by clicking the buttons, please see addTimeslot as an example
+// isShownBeforeLogin - type boolean | description: show button in login if true | default: false
+createExtensionSection("Search System Variable", ["type", "code"], async () => await searchSystemVariable(), {
+  filter: "fsql",
+});
+createExtensionSection("Update System Variable", ["type", "code", "content"], async () => await updateSystemVariable(), {
+  filter: "impex",
+});
+createSearchUserGroupSection();
+createExtensionSection("Add Timeslot", ["date range", "dzone id"], async () => await addTimeslot(), {
+  filter: "groovy",
+  fieldDefaults: [String(HAC_EXT_DEFAULT_ADD_TIMESLOT_DAYS), HAC_EXT_DEFAULT_ADD_TIMESLOT_DZONE_ID],
+});
+
+createExtensionSection(
+  "Add Stock",
+  ["product code"],
+  async () => await addStock(),
+  {
+    filter: "groovy",
+    fieldDefaults: [HAC_EXT_DEFAULT_ADD_STOCK_PRODUCT],
+  }
+);
+
+createExtensionSection(
+  "Complete Order",
+  ["order code"],
+  async () => await completeOrderScript(),
+  {
+    filter: "groovy",
+    fieldDefaults: ["H260121003004"],
+  }
+);
+
+
+
+// Please put your callbacks here!
+
+async function completeOrderScript() {
+  let orderCodeInput =
+    (document.querySelector("#completeOrderArg0")?.value ?? "").trim() ||
+    "H260121003004";
+
+  // Support multiple order codes (comma-separated)
+  let orderCodes = orderCodeInput
+    .split(",")
+    .map(c => c.trim())
+    .filter(c => c !== "");
+
+  let orderCodeListStr = orderCodes.map(c => `"${c}"`).join(", ");
+
+  let groovyScript = `
+import hk.com.hktv.fulfilmentprocess.constants.HktvFulfilmentProcessConstants;
+import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
+import java.util.UUID;
+import de.hybris.platform.core.model.order.OrderModel
+import de.hybris.platform.basecommerce.enums.ConsignmentStatus
+import de.hybris.platform.core.enums.OrderStatus
+import hk.com.hktv.facades.consignment.data.HktvConsignmentUpdateStatusResponse;
+import hk.com.hktv.webservices.order.data.HktvCustomerReceivedReferenceData;
+import hk.com.hktv.webservices.order.data.HktvCustomerReceivedBatchData;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
+import java.util.TimeZone;
+import de.hybris.platform.servicelayer.search.FlexibleSearchQuery
+import de.hybris.platform.ordersplitting.model.ConsignmentModel;
+import hk.com.hktv.core.model.HktvVariantProductModel;
+import hk.com.hktv.core.utils.HktvDateTimeUtils
+
+hktvOrderService = spring.getBean('orderService')
+hktvConsignmentFacade = spring.getBean('hktvConsignmentFacade')
+hktvConsignmentStatusFacade = spring.getBean('hktvConsignmentStatusFacade')
+hktvConsignmentFacade = spring.getBean('hktvConsignmentFacade')
+hktvCreditService = spring.getBean('hktvCreditService')
+
+// this make use on order complete job to complete order to make flow sync
+completeJob = true
+orderCodeList = [${orderCodeListStr}]
+
+// if you have 2 suborder, 2 batch will be created
+twoReceivedBatch = false
+
+orderCodeList.each {
+    println it
+    completeOrder(it, twoReceivedBatch)
+}
+
+if (completeJob) {
+    cronJobService = spring.getBean('cronJobService')
+    j = cronJobService.getCronJob("hktvConsignmentOrderCompleteCronJob")
+    cronJobService.performCronJob(j,true)
+}
+println "run order complete job"
+
+def getCurrentISO8601(){
+    TimeZone tz = TimeZone.getTimeZone("GMT+8");
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+    df.setTimeZone(tz);
+    return df.format(new Date());
+}
+
+def completeOrder(orderCode, twoReceivedBatch)
+{
+    o = new OrderModel()
+    o.setCode(orderCode)
+    parentOrder = flexibleSearchService.getModelByExample(o)
+    allSubOrder = hktvCreditService.getAllsubOrders(parentOrder)
+
+    consignmentListA = []
+    consignmentListB = []
+    consignementList = []
+    loopOrderCount = 0
+
+    for (subOrder in allSubOrder) {
+        println "update subOrder: " + subOrder.getCode()
+        consignements = subOrder.getConsignments()
+
+        for (consignement in consignements)
+        {
+            if (!HktvFulfilmentProcessConstants.DELIVERY_MODE.MERCHANT.equals(consignement.getDeliveryMode2().getCode()))
+            {
+                consignementList.push(consignement)
+                consignement.setReceiveDate(new Date())
+                hktvConsignmentStatusFacade.updateConsignmentStatus(consignement, ConsignmentStatus.RECEIVED_BY_CUSTOMER)
+
+                if(loopOrderCount%2 == 0)
+                    consignmentListA.push(consignement.getCode())
+                else
+                    consignmentListB.push(consignement.getCode())
+
+                println "update consignemnt: " + consignement.getCode()
+            }
+            else
+            {
+                println "merchant delivery consignemnt: " + consignement.getCode()
+            }
+            loopOrderCount++
+        }
+
+        modelService.saveAll(consignementList)
+    }
+
+    if(twoReceivedBatch)
+    {
+        mockReceivedBatch(consignmentListA)
+        mockReceivedBatch(consignmentListB)
+    }
+    else
+    {
+        mockReceivedBatch(consignmentListA + consignmentListB)
+    }
+}
+
+def mockReceivedBatch(consignmentList)
+{
+    hktvCustomerReceivedBatchData = new HktvCustomerReceivedBatchData()
+    hktvCustomerReceivedBatchData.setCode(UUID.randomUUID().toString())
+    hktvCustomerReceivedBatchData.setConsignments(consignmentList)
+    hktvCustomerReceivedBatchData.setCustomerReceivedTime(getCurrentISO8601())
+
+    HktvCustomerReceivedReferenceData ref = new HktvCustomerReceivedReferenceData()
+    ref.setImageData('/oixnfs/waybill_signature_image/2018/02/01/4000019168_CUS_SIGN_20180201113111.png')
+    ref.setImageSeq(1)
+    ref.setImageCategory('CUST_SIGN')
+
+    hktvCustomerReceivedBatchData.setReferenceFiles([ref])
+    hktvConsignmentFacade.uploadCustomerReceivedBatch(hktvCustomerReceivedBatchData);
+
+    println "Created CustomerReceivedBatch: " + hktvCustomerReceivedBatchData.getCode()
+}
+
+def job = cronJobService.getCronJob("hktvConsignmentOrderCompleteCronJob")
+cronJobService.performCronJob(job,true)
+`;
+
+  await hacExtCopyWithToast(groovyScript);
+}
+
+
+async function addStock() {
+  let productCodeInput =
+    (document.querySelector("#addStockArg0")?.value ?? "").trim() ||
+    HAC_EXT_DEFAULT_ADD_STOCK_PRODUCT;
+
+  // Support multiple product codes
+  let productCodes = productCodeInput
+    .split(",")
+    .map(c => c.trim())
+    .filter(c => c !== "");
+
+  let productCodeListStr = productCodes.map(c => `"${c}"`).join(", ");
+
+  let groovyScript = `
+import de.hybris.platform.servicelayer.search.FlexibleSearchQuery
+import de.hybris.platform.ordersplitting.model.StockLevelModel
+import de.hybris.platform.ordersplitting.model.WarehouseModel
+import de.hybris.platform.core.model.product.ProductModel
+
+productCodeList = [${productCodeListStr}]
+stockLevelModelList = []
+amountList = []
+
+productCodeList.each {
+    productCode = it
+    println productCode
+
+    warehouseCode = spring.getBean("defaultHktvStockService").getWarehouseByProduct(productCode).getCode()
+    println warehouseCode
+
+    stockLevelModel = new StockLevelModel()
+    stockLevelModel.setProductCode(productCode)
+
+    warehouseModel = new WarehouseModel()
+    warehouseModel.setCode(warehouseCode)
+
+    stockLevelModel.setWarehouse(warehouseModel)
+    stockLevelModelList.add(stockLevelModel)
+
+    amountList.add(99999)
+}
+
+hktvStockService.batchCreateStockLevel(stockLevelModelList)
+hktvStockService.batchUpdateActualAmount(stockLevelModelList, amountList)
+
+productCodeList.each {
+    p = new ProductModel()
+    p.setCode(it)
+    s = hktvStockService.findStockLevel(p)
+    println s.getAvailable()
+}
+`;
+
+  await hacExtCopyWithToast(groovyScript);
+}
+
+
+
+
+
+
+async function addTimeslot() {
+  let dateRange = document.querySelector("#addTimeslotArg0")?.value || HAC_EXT_DEFAULT_ADD_TIMESLOT_DAYS;
+  let dZoneId = document.querySelector("#addTimeslotArg1")?.value || HAC_EXT_DEFAULT_ADD_TIMESLOT_DZONE_ID;
+
+  let groovyScript = `
+    int toDate = ${dateRange}
+    dZoneId = "${dZoneId}"
+
+    import de.hybris.platform.servicelayer.search.FlexibleSearchService
+    import hk.com.hktv.core.delivery.model.DeliveryZoneModel
+    import hk.com.hktv.core.delivery.model.HktvDeliveryDistrictModel
+    import hk.com.hktv.core.utils.HktvDateTimeUtils
+    import redis.clients.jedis.Jedis
+    import redis.clients.jedis.exceptions.JedisConnectionException
+    import org.joda.time.DateTime
+    import redis.clients.jedis.JedisCluster;
+    import redis.clients.jedis.exceptions.JedisDataException;
+    import hk.com.hktv.redis.commom.RedisClusterCallback;
+    import hk.com.hktv.redis.constants.HktvredisConstants;
+    import hk.com.hktv.redis.delivery.HktvRedisPickPackResourceDao;
+    import hk.com.hktv.redis.exception.HktvNoRedisResultException;
+
+    FlexibleSearchService flexibleSearchService = spring.getBean("flexibleSearchService")
+
+    final String HASH_KEY = "deliveryQuota:any";
+    final String HASH_KEY_DRY = "deliveryQuota:dry";
+    String[] timeSlots = ["AM", "PM", "EV"]
+
+    final Date startDate = new DateTime().toDate();
+    final Date endDate = new DateTime().plusDays(toDate).toDate();
+
+    deliveryZoneModel = deliveryZoneService.getDeliveryZoneForZoneId(dZoneId);
+    hktvDeliveryDistrictModel = deliveryZoneModel.getDeliveryDistrict();
+    String deliveryDistrictCode = hktvDeliveryDistrictModel.getCode()
+    String quotaValue = "999"
+    String availabilityValue = "Y"
+
+    try {
+      HktvDeliveryDistrictModel exampleDeliveryDistrictModel = new HktvDeliveryDistrictModel()
+      exampleDeliveryDistrictModel.setCode(deliveryDistrictCode)
+      HktvDeliveryDistrictModel hktvDeliveryDistrictModel = flexibleSearchService.getModelByExample(exampleDeliveryDistrictModel)
+
+      DeliveryZoneModel exampleDeliveryZoneModel = new DeliveryZoneModel()
+      exampleDeliveryZoneModel.setDeliveryDistrict(hktvDeliveryDistrictModel)
+      List<DeliveryZoneModel> deliveryZoneModelList = flexibleSearchService.getModelsByExample(exampleDeliveryZoneModel)
+
+      while (!startDate.after(endDate)) {
+
+        String dateStr = HktvDateTimeUtils.getNumericDate(startDate)
+
+        for (String timeSlot : timeSlots) {
+
+          String quotaKey = deliveryDistrictCode + ":" + dateStr + ":" + timeSlot + ":quota"
+          jedisDataManager.clusterExecute(new RedisClusterCallback<Object>()
+            {
+              @Override
+              public Object doInRedisCluster(JedisCluster jedisCluster) throws Exception
+              {
+                jedisCluster.hset(HASH_KEY, quotaKey, quotaValue)
+                jedisCluster.hset(HASH_KEY_DRY, quotaKey, quotaValue)
+                return;
+              }
+            });
+
+
+          for (DeliveryZoneModel deliveryZoneModel : deliveryZoneModelList) {
+                    String deliveryZoneId = deliveryZoneModel.getD_zone_id()
+            String availabilityKey = deliveryZoneId + ":" + dateStr + ":" + timeSlot + ":availability"
+            jedisDataManager.clusterExecute(new RedisClusterCallback<Object>()
+            {
+              @Override
+              public Object doInRedisCluster(JedisCluster jedisCluster) throws Exception
+              {
+                jedisCluster.hset(HASH_KEY, availabilityKey, availabilityValue)
+                jedisCluster.hset(HASH_KEY_DRY, availabilityKey, availabilityValue)
+                return;
+              }
+            });
+          }
+        }
+
+        startDate = HktvDateTimeUtils.addDays(startDate, 1);
+      }
+
+      println("Create ADRA delivery quota DONE")
+    } catch (Exception e) {
+      println("Unexpected Exception from Redis")
+    }
+  `
+
+  await hacExtCopyWithToast(groovyScript);
+}
+async function searchSystemVariable() {
+  let variableType = (document.querySelector("#searchSystemVariableArg0")?.value ?? "").trim();
+  let variableCode = (document.querySelector("#searchSystemVariableArg1")?.value ?? "").trim();
+
+  const lines = [
+    "SELECT /*hktv-slave-db*/ {VariableType}, {VariableCode}, {VariableContent}",
+    "FROM {SystemVariable}",
+  ];
+
+  const parts = [];
+  if (variableType !== "") parts.push(`{VariableType} = "${variableType}"`);
+  if (variableCode !== "") parts.push(`{VariableCode} = "${variableCode}"`);
+
+  if (parts.length > 0) {
+    lines.push(`WHERE ${parts[0]}`);
+    for (let i = 1; i < parts.length; i++) {
+      lines.push(`AND ${parts[i]}`);
+    }
+  }
+
+  await hacExtCopyWithToast(lines.join("\n"));
+}
+
+async function searchUserGroup() {
+  const pkRaw = document.querySelector("#searchUserGroupArg0")?.value ?? "";
+  const phoneRaw = document.querySelector("#searchUserGroupArg1")?.value ?? "";
+  const pk = pkRaw.trim();
+  const phone = phoneRaw.trim();
+
+  let lines;
+  if (pk !== "") {
+    lines = [
+      `select /*hktv-slave-db*/ {ug.uid} `, `from {User as u `, `join PrincipalGroupRelation as rel on {rel.source} = {u.PK} `, `join UserGroup as ug on {rel.target} = {ug.PK}} `, `where {u.PK} = ${pk} `, `order by {ug.uid}`,
+    ];
+  } else if (phone !== "") {
+    lines = [
+      `select /*hktv-slave-db*/ {ug.uid} `, `from {PhoneContactInfo as phone `, `join PrincipalGroupRelation as rel on {rel.source} = {phone.user} `, `join UserGroup as ug on {rel.target} = {ug.PK}} `, `where {phone.code} = "${phone}" `, `order by {ug.uid}`,
+    ];
+  } else {
+    lines = [
+      `select /*hktv-slave-db*/ {ug.uid} `, `from {User as u `, `join PrincipalGroupRelation as rel on {rel.source} = {u.PK} `, `join UserGroup as ug on {rel.target} = {ug.PK}} `, `where {u.PK} = ${HAC_EXT_DEFAULT_SEARCH_USER_GROUP_PK} `, `order by {ug.uid}`,
+    ];
+  }
+
+  await hacExtCopyWithToast(lines.join("\n"));
+}
+
+async function updateSystemVariable() {
+  const variableType = document.querySelector("#updateSystemVariableArg0")?.value ?? "";
+  const variableCode = document.querySelector("#updateSystemVariableArg1")?.value ?? "";
+  const variableContent = document.querySelector("#updateSystemVariableArg2")?.value ?? "";
+
+  const impex = [
+    "INSERT_UPDATE SystemVariable;variableType[unique=true];variableCode[unique=true];variableContent;",
+    `;${variableType};${variableCode};${variableContent};`,
+  ].join("\n");
+
+  await hacExtCopyWithToast(impex);
+}
+
+// DO NOT CHANGE THE CODE BELOW IF YOU HAVE NO IDEA WHAT'S HAPPENING DOWN HERE :)
+function convertNameToId(name) {
+  let words = name.toLowerCase().split(" ");
+  let camelCase = words[0];
+
+  for (let i = 1; i < words.length; i++) {
+    let capitalizedWord = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    camelCase += capitalizedWord;
+  }
+
+  return camelCase;
+}
+function createExtensionSection(name, args, callback, opts = {}) {
+  let isShownBeforeLogin = false;
+  let filter = "fsql";
+  let fieldDefaults;
+  if (typeof opts === "boolean") {
+    isShownBeforeLogin = opts;
+  } else if (opts && typeof opts === "object") {
+    isShownBeforeLogin = Boolean(opts.isShownBeforeLogin);
+    if (opts.filter) filter = opts.filter;
+    fieldDefaults = opts.fieldDefaults;
+  }
+
+  const isInLoginPage = window.location.href.includes("login.jsp");
+
+  if (isInLoginPage !== isShownBeforeLogin) return;
+
+  const id = convertNameToId(name);
+
+  const section = document.createElement("div");
+  section.id = id;
+  section.dataset.hacFilter = filter;
+  hacExtApplyStyles(section, HAC_EXT_STYLES.section);
+
+  const row = document.createElement("div");
+  hacExtApplyStyles(row, HAC_EXT_STYLES.toolbarRow);
+
+  const button = document.createElement("button");
+  button.innerHTML = name;
+  button.addEventListener("click", callback);
+  button.type = "button";
+  hacExtApplyStyles(button, HAC_EXT_STYLES.primaryButton);
+
+  const resetBtn = document.createElement("button");
+  resetBtn.type = "button";
+  resetBtn.textContent = "Reset";
+  resetBtn.setAttribute("data-hac-section-reset", "true");
+  resetBtn.setAttribute("aria-label", `Reset ${name} fields`);
+  hacExtApplyStyles(resetBtn, HAC_EXT_STYLES.resetButton);
+  resetBtn.style.display = "none";
+
+  resetBtn.addEventListener("click", () => {
+    for (const [i] of args.entries()) {
+      const el = document.querySelector(`#${id}Arg${i}`);
+      if (el) el.value = "";
+    }
+    hacExtClearSectionFields(id, args.length);
+    hacExtSyncSectionResetVisibility(section, resetBtn);
+  });
+
+  row.append(button, resetBtn);
+  section.append(row);
+
+  for (const [i, v] of args.entries()) {
+    const inputBox = document.createElement("input");
+    inputBox.id = id + `Arg${i}`;
+    inputBox.type = "text";
+    const defVal = fieldDefaults && fieldDefaults[i];
+    inputBox.placeholder =
+      defVal != null && defVal !== "" ? hacExtPlaceholderWithDefault(v, defVal) : hacExtDisplayLabel(v);
+    hacExtApplyStyles(inputBox, HAC_EXT_STYLES.textInput);
+
+    hacExtAttachFieldPersistence(inputBox, id, i);
+    inputBox.addEventListener("input", () => {
+      hacExtSyncSectionResetVisibility(section, resetBtn);
+    });
+    section.append(inputBox);
+  }
+
+  hacExtSyncSectionResetVisibility(section, resetBtn);
+
+  EXTENSION_SECTIONS.push(section);
+
+  return section;
+}
+
+function createSearchUserGroupSection() {
+  const name = "Search User Group";
+  const isInLoginPage = window.location.href.includes("login.jsp");
+  if (isInLoginPage) return;
+
+  const id = convertNameToId(name);
+
+  const section = document.createElement("div");
+  section.id = id;
+  section.dataset.hacFilter = "fsql";
+  hacExtApplyStyles(section, HAC_EXT_STYLES.section);
+
+  const toolbarRow = document.createElement("div");
+  hacExtApplyStyles(toolbarRow, HAC_EXT_STYLES.toolbarRow);
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = name;
+  button.addEventListener("click", () => {
+    void searchUserGroup();
+  });
+  hacExtApplyStyles(button, HAC_EXT_STYLES.primaryButton);
+
+  const resetBtn = document.createElement("button");
+  resetBtn.type = "button";
+  resetBtn.textContent = "Reset";
+  resetBtn.setAttribute("data-hac-section-reset", "true");
+  resetBtn.setAttribute("aria-label", `Reset ${name} fields`);
+  hacExtApplyStyles(resetBtn, HAC_EXT_STYLES.resetButton);
+  resetBtn.style.display = "none";
+
+  const pkInput = document.createElement("input");
+  pkInput.id = `${id}Arg0`;
+  pkInput.type = "text";
+  pkInput.placeholder = hacExtPlaceholderWithDefault("user PK", HAC_EXT_DEFAULT_SEARCH_USER_GROUP_PK);
+  hacExtApplyStyles(pkInput, HAC_EXT_STYLES.splitInput);
+
+  const phoneInput = document.createElement("input");
+  phoneInput.id = `${id}Arg1`;
+  phoneInput.type = "text";
+  phoneInput.placeholder = hacExtDisplayLabel("phone");
+  hacExtApplyStyles(phoneInput, HAC_EXT_STYLES.splitInput);
+
+  function syncMutualDisable() {
+    const pk = pkInput.value.trim();
+    const phone = phoneInput.value.trim();
+    if (pk !== "") {
+      pkInput.disabled = false;
+      phoneInput.disabled = true;
+    } else if (phone !== "") {
+      pkInput.disabled = true;
+      phoneInput.disabled = false;
+    } else {
+      pkInput.disabled = false;
+      phoneInput.disabled = false;
+    }
+  }
+
+  const splitRow = document.createElement("div");
+  hacExtApplyStyles(splitRow, HAC_EXT_STYLES.toolbarRow);
+  splitRow.style.gap = HAC_EXT_STACK_GAP;
+  splitRow.append(pkInput, phoneInput);
+
+  hacExtAttachFieldPersistence(pkInput, id, 0);
+  hacExtAttachFieldPersistence(phoneInput, id, 1);
+
+  const bumpResetVisibility = () => {
+    hacExtSyncSectionResetVisibility(section, resetBtn);
+    syncMutualDisable();
+  };
+
+  pkInput.addEventListener("input", bumpResetVisibility);
+  phoneInput.addEventListener("input", bumpResetVisibility);
+
+  resetBtn.addEventListener("click", () => {
+    pkInput.value = "";
+    phoneInput.value = "";
+    pkInput.disabled = false;
+    phoneInput.disabled = false;
+    hacExtClearSectionFields(id, 2);
+    hacExtSyncSectionResetVisibility(section, resetBtn);
+  });
+
+  toolbarRow.append(button, resetBtn);
+  section.append(toolbarRow, splitRow);
+
+  syncMutualDisable();
+  hacExtSyncSectionResetVisibility(section, resetBtn);
+
+  EXTENSION_SECTIONS.push(section);
+}
+
+function createExtensionDiv() {
+  if (window.location.href.includes("login.jsp")) return;
+
+  hacExtEnsureGlobalStyles();
+
+  const root = document.createElement("div");
+  root.id = "hacExtension";
+  Object.assign(root.style, {
+    position: "fixed",
+    bottom: "8px",
+    right: "8px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    gap: "0",
+    zIndex: "2147483647",
+    fontFamily: "system-ui, -apple-system, Segoe UI, sans-serif",
+    fontSize: "13px",
+  });
+
+  const panel = document.createElement("div");
+  panel.id = "hacExtensionPanel";
+  panel.setAttribute("role", "region");
+  panel.setAttribute("aria-label", "HAC extension tools");
+  panel.hidden = true;
+  Object.assign(panel.style, {
+    display: "none",
+    flexDirection: "column",
+    gap: "8px",
+    alignItems: "stretch",
+    boxSizing: "border-box",
+    width: `min(${HAC_EXT_PANEL_MIN_WIDTH_PX}px, calc(100vw - 56px))`,
+    padding: "10px 12px",
+    maxHeight: "min(88vh, 780px)",
+    overflowY: "auto",
+    color: "#111111",
+    background: "#ffffff",
+    border: "1px solid #494949",
+    borderRadius: "8px",
+    boxShadow: "0 4px 24px rgba(0, 0, 0, 0.18)",
+  });
+
+  const HIDE_DELAY_MS = 250;
+  let open = false;
+  let hideTimer = null;
+
+  function clearHideTimer() {
+    if (hideTimer !== null) {
+      clearTimeout(hideTimer);
+      hideTimer = null;
+    }
+  }
+
+  const pinBtn = document.createElement("button");
+  pinBtn.type = "button";
+  pinBtn.id = "hacExtensionPin";
+  Object.assign(pinBtn.style, {
+    margin: "0",
+    padding: "6px 14px",
+    fontSize: "12px",
+    cursor: "pointer",
+    borderRadius: "9999px",
+    border: `1px solid ${HAC_EXT_DARK_BLUE}`,
+    background: "#ffffff",
+    color: HAC_EXT_DARK_BLUE,
+    fontWeight: "500",
+    fontFamily: "inherit",
+    transition: "background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease",
+    outline: "2px solid transparent",
+    outlineOffset: "2px",
+  });
+
+  pinBtn.addEventListener("focus", () => {
+    pinBtn.style.outlineColor = HAC_EXT_DARK_BLUE;
+  });
+  pinBtn.addEventListener("blur", () => {
+    pinBtn.style.outlineColor = "transparent";
+  });
+
+  let pinned = hacExtLoadPinned();
+  hacExtApplyPinButtonUi(pinBtn, pinned);
+
+  const resetAllBtn = document.createElement("button");
+  resetAllBtn.type = "button";
+  resetAllBtn.id = "hacExtensionResetAll";
+  resetAllBtn.textContent = "Reset all";
+  resetAllBtn.setAttribute("aria-label", "Reset all tool fields");
+  Object.assign(resetAllBtn.style, {
+    margin: "0",
+    padding: "6px 10px",
+    border: "1px solid #e5e7eb",
+    borderRadius: "6px",
+    background: "#f3f4f6",
+    color: "#374151",
+    cursor: "pointer",
+    fontSize: "12px",
+    fontWeight: "500",
+    fontFamily: "inherit",
+    lineHeight: "1.25",
+  });
+  resetAllBtn.addEventListener("click", () => {
+    hacExtResetAllSections();
+  });
+
+  const filterSpecs = [
+    { id: "fsql", label: "FSQL" },
+    { id: "impex", label: "IMPEX" },
+    { id: "groovy", label: "Groovy" },
+  ];
+
+  const toolbar = document.createElement("div");
+  Object.assign(toolbar.style, {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "8px",
+    flexWrap: "nowrap",
+    paddingBottom: "8px",
+    marginBottom: "4px",
+    borderBottom: `1px solid ${HAC_EXT_SEPARATOR}`,
+  });
+
+  const filterWrap = document.createElement("div");
+  Object.assign(filterWrap.style, {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: HAC_EXT_STACK_GAP,
+    flex: "1 1 auto",
+    minWidth: "0",
+    flexWrap: "nowrap",
+    overflowX: "auto",
+  });
+
+  const filterLabel = document.createElement("span");
+  filterLabel.textContent = "Filters";
+  Object.assign(filterLabel.style, {
+    fontSize: "12px",
+    fontWeight: "600",
+    color: HAC_EXT_DARK_BLUE,
+    flexShrink: "0",
+  });
+  filterWrap.appendChild(filterLabel);
+
+  const filterButtons = new Map();
+  let activeFilterId = hacExtLoadFilterId();
+  let hoverCloseGraceUntil = 0;
+
+  function noteFilterLayoutInteraction() {
+    hoverCloseGraceUntil = performance.now() + HAC_EXT_HOVER_CLOSE_GRACE_MS;
+    clearHideTimer();
+  }
+
+  const filterBaseStyle = {
+    margin: "0",
+    padding: "6px 12px",
+    fontSize: "12px",
+    cursor: "pointer",
+    borderRadius: "9999px",
+    border: `1px solid ${HAC_EXT_DARK_BLUE}`,
+    background: "#ffffff",
+    color: HAC_EXT_DARK_BLUE,
+    fontWeight: "500",
+    fontFamily: "inherit",
+    flexShrink: "0",
+    transition: "background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease",
+  };
+
+  const filterActiveStyle = {
+    background: HAC_EXT_DARK_BLUE,
+    color: "#ffffff",
+    borderColor: HAC_EXT_DARK_BLUE,
+    fontWeight: "600",
+  };
+
+  function applyFilterChipStyle(btn, on) {
+    Object.assign(btn.style, filterBaseStyle);
+    if (on) Object.assign(btn.style, filterActiveStyle);
+  }
+
+  function syncFilterChipsFromId() {
+    for (const [id, b] of filterButtons) {
+      const on = activeFilterId === id;
+      b.setAttribute("aria-pressed", String(on));
+      applyFilterChipStyle(b, on);
+    }
+  }
+
+  function onFilterChipClick(id, btn) {
+    noteFilterLayoutInteraction();
+    if (activeFilterId === id) {
+      activeFilterId = null;
+    } else {
+      activeFilterId = id;
+    }
+    hacExtSaveFilterId(activeFilterId);
+    hacExtApplySectionFilter(activeFilterId);
+    syncFilterChipsFromId();
+    window.requestAnimationFrame(() => {
+      try {
+        btn.blur();
+      } catch (_) {}
+    });
+  }
+
+  for (const spec of filterSpecs) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = spec.label;
+    b.setAttribute("aria-pressed", "false");
+    b.setAttribute(
+      "aria-label",
+      `${spec.label} filter; only one at a time. Click again to show all tools.`
+    );
+    b.addEventListener("click", () => {
+      onFilterChipClick(spec.id, b);
+    });
+    filterButtons.set(spec.id, b);
+    filterWrap.appendChild(b);
+  }
+
+  const rightTools = document.createElement("div");
+  Object.assign(rightTools.style, {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "8px",
+    flexShrink: "0",
+  });
+  rightTools.append(pinBtn, resetAllBtn);
+
+  toolbar.append(filterWrap, rightTools);
+  panel.append(toolbar);
+
+  for (const section of EXTENSION_SECTIONS) {
+    panel.append(section);
+  }
+
+  const scratchWrap = document.createElement("div");
+  Object.assign(scratchWrap.style, {
+    marginTop: "4px",
+    paddingTop: "10px",
+    borderTop: `1px solid ${HAC_EXT_SEPARATOR}`,
+    display: "flex",
+    flexDirection: "column",
+    gap: HAC_EXT_STACK_GAP,
+  });
+
+  const scratch = document.createElement("textarea");
+  scratch.id = "hacExtensionScratch";
+  scratch.setAttribute("aria-label", "Scratch pad");
+  scratch.setAttribute("placeholder", "Paste notes or snippets here…");
+  Object.assign(scratch.style, {
+    width: "100%",
+    minHeight: "88px",
+    boxSizing: "border-box",
+    margin: "0",
+    padding: "8px",
+    border: "1px solid #494949",
+    borderRadius: "4px",
+    background: "#ffffff",
+    color: "#111111",
+    fontFamily: HAC_EXT_INPUT_FONT_FAMILY,
+    fontSize: "12px",
+    lineHeight: "1.4",
+    resize: "vertical",
+  });
+  hacExtAttachScratchPersistence(scratch);
+  scratchWrap.appendChild(scratch);
+  panel.append(scratchWrap);
+
+  hacExtApplySectionFilter(activeFilterId);
+  syncFilterChipsFromId();
+
+  const toggle = document.createElement("button");
+  toggle.id = "hacExtensionToggle";
+  toggle.type = "button";
+  toggle.textContent = "Hover";
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-controls", "hacExtensionPanel");
+  toggle.setAttribute("aria-label", "Hover this corner to open tools; move away to close");
+  Object.assign(toggle.style, {
+    margin: "0",
+    padding: "6px 12px",
+    cursor: "default",
+    borderRadius: "8px",
+    border: `1px solid ${HAC_EXT_DARK_BLUE}`,
+    background: HAC_EXT_DARK_BLUE,
+    color: "#ffffff",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+    fontWeight: "600",
+    boxSizing: "border-box",
+    whiteSpace: "nowrap",
+    flex: "0 0 auto",
+    width: "auto",
+    maxWidth: "none",
+    alignSelf: "flex-end",
+  });
+
+  function syncPanelToggleLayout() {
+    if (pinned) {
+      open = true;
+      root.style.alignItems = "stretch";
+      root.style.width = "auto";
+      root.style.height = "auto";
+      root.style.minWidth = "";
+      root.style.minHeight = "";
+      root.removeAttribute("aria-label");
+      panel.hidden = false;
+      panel.style.display = "flex";
+      panel.style.borderRadius = "8px";
+      panel.style.border = "1px solid #494949";
+      panel.style.borderBottomWidth = "1px";
+      panel.style.borderBottomStyle = "solid";
+      panel.style.borderBottomColor = "#494949";
+      toggle.style.display = "none";
+      toggle.setAttribute("aria-expanded", "true");
+      return;
+    }
+
+    toggle.textContent = "Hover";
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute(
+      "aria-label",
+      open
+        ? "Tools open; move pointer off this widget to close"
+        : "Hover here to open tools; move pointer away to close"
+    );
+
+    if (open) {
+      // Open: panel only — no full-width bottom bar (avoids the huge "Hover" strip).
+      root.style.alignItems = "stretch";
+      root.style.width = "auto";
+      root.style.height = "auto";
+      root.style.minWidth = "";
+      root.style.minHeight = "";
+      root.removeAttribute("aria-label");
+      toggle.style.display = "none";
+      panel.hidden = false;
+      panel.style.display = "flex";
+      panel.style.borderRadius = "8px";
+      panel.style.border = "1px solid #494949";
+      panel.style.borderBottomWidth = "1px";
+      panel.style.borderBottomStyle = "solid";
+      panel.style.borderBottomColor = "#494949";
+    } else {
+      // Closed: compact pill only (shrink-wrapped, not stretched).
+      root.style.alignItems = "flex-end";
+      root.style.width = "auto";
+      root.style.height = "auto";
+      root.style.minWidth = "";
+      root.style.minHeight = "";
+      root.removeAttribute("aria-label");
+      toggle.style.display = "";
+      toggle.style.width = "auto";
+      toggle.style.alignSelf = "flex-end";
+      toggle.style.flex = "0 0 auto";
+      panel.hidden = true;
+      panel.style.display = "none";
+      panel.style.borderRadius = "8px";
+      panel.style.border = "1px solid #494949";
+      panel.style.borderBottomWidth = "1px";
+      panel.style.borderBottomStyle = "solid";
+      panel.style.borderBottomColor = "#494949";
+    }
+  }
+
+  function setOpen(next) {
+    if (pinned) return;
+    open = next;
+    syncPanelToggleLayout();
+  }
+
+  /** Only real form fields should block hover-close (toolbar buttons kept focus after click). */
+  function panelFormFieldHasFocus() {
+    const a = document.activeElement;
+    if (a == null || !panel.contains(a)) return false;
+    const tag = a.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+    return a.isContentEditable === true;
+  }
+
+  function scheduleClose() {
+    if (pinned) return;
+    clearHideTimer();
+    const now = performance.now();
+    const delay = Math.max(HIDE_DELAY_MS, hoverCloseGraceUntil - now);
+    hideTimer = window.setTimeout(() => {
+      hideTimer = null;
+      if (panelFormFieldHasFocus()) return;
+      setOpen(false);
+    }, delay);
+  }
+
+  panel.addEventListener("focusin", (ev) => {
+    const t = ev.target;
+    if (
+      t &&
+      (t.matches?.("input, textarea, select") ||
+        t.tagName === "INPUT" ||
+        t.tagName === "TEXTAREA" ||
+        t.tagName === "SELECT" ||
+        t.isContentEditable === true)
+    ) {
+      clearHideTimer();
+    }
+  });
+
+  root.addEventListener("mouseenter", () => {
+    clearHideTimer();
+    setOpen(true);
+  });
+
+  root.addEventListener("mouseleave", () => {
+    scheduleClose();
+  });
+
+  pinBtn.addEventListener("click", () => {
+    pinned = !pinned;
+    hacExtSavePinned(pinned);
+    hacExtApplyPinButtonUi(pinBtn, pinned);
+    clearHideTimer();
+    syncPanelToggleLayout();
+    window.requestAnimationFrame(() => {
+      try {
+        pinBtn.blur();
+      } catch (_) {}
+    });
+  });
+
+  root.append(panel, toggle);
+
+  const containerDiv = document.querySelector("#mainContainer") ?? document.querySelector(".logincontainer");
+  if (!containerDiv) return;
+
+  containerDiv.append(root);
+
+  syncPanelToggleLayout();
+  if (pinned) {
+    clearHideTimer();
+  }
+}
+
+// Where the script triggers...
+createExtensionDiv();

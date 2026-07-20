@@ -1,0 +1,26 @@
+{
+  "name": "slack-cursor-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local Slack app that forwards app mentions to Cursor CLI agent on Windows",
+  "type": "module",
+  "main": "dist/slack.app.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/slack.app.js",
+    "dev": "tsc && node dist/slack.app.js",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@slack/bolt": "^4.2.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

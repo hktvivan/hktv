@@ -1,0 +1,393 @@
+Message-ID: <526771412.7.1730792723699@cb8ace169e49>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_6_1614214675.1730792723699"
+
+------=_Part_6_1614214675.1730792723699
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>WebView redirect testing</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>WebView redirect testing</h1>
+    <div class=3D"Section1">
+        <h1 id=3D"WebViewredirecttesting-=E4=BD=BF=E7=94=A8=E5=B7=A5=E5=85=
+=B7">
+<style>[data-colorid=3Dxm6wsbsd06]{color:#0747a6} html[data-color-mode=3Dda=
+rk] [data-colorid=3Dxm6wsbsd06]{color:#5999f8}[data-colorid=3Dmwek9vfedf]{c=
+olor:#ff5630} html[data-color-mode=3Ddark] [data-colorid=3Dmwek9vfedf]{colo=
+r:#cf2600}[data-colorid=3De3ztt1o2wm]{color:#0747a6} html[data-color-mode=
+=3Ddark] [data-colorid=3De3ztt1o2wm]{color:#5999f8}[data-colorid=3Dxs49r47i=
+ur]{color:#0747a6} html[data-color-mode=3Ddark] [data-colorid=3Dxs49r47iur]=
+{color:#5999f8}</style>=E4=BD=BF=E7=94=A8=E5=B7=A5=E5=85=B7</h1>
+<ul>
+<li>
+<p>localtunnel - <a class=3D"external-link" data-card-appearance=3D"inline"=
+ href=3D"https://localtunnel.github.io/www/" rel=3D"nofollow">https://local=
+tunnel.github.io/www/</a></p></li>
+<li>
+<p>nodemon(optional) - <a class=3D"external-link" data-card-appearance=3D"i=
+nline" href=3D"https://www.npmjs.com/package/nodemon" rel=3D"nofollow">http=
+s://www.npmjs.com/package/nodemon</a></p></li>
+</ul>
+<h1 id=3D"WebViewredirecttesting-=E5=BB=BA=E7=AB=8BServer">=E5=BB=BA=E7=AB=
+=8BServer</h1>
+<ol start=3D"1">
+<li>
+<p>init project</p></li>
+</ol>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: java; gutter: false; theme: Confluence" data-theme=3D"Confluence">npm ini=
+t -y</pre>
+</div>
+</div>
+<ol start=3D"2">
+<li>
+<p>install <code>express</code></p></li>
+</ol>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: java; gutter: false; theme: Confluence" data-theme=3D"Confluence">npm ins=
+tall express</pre>
+</div>
+</div>
+<ol start=3D"3">
+<li>
+<p>create server file <code>server.js</code>; add redirect code</p></li>
+</ol>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: js; gutter: false; theme: Confluence" data-theme=3D"Confluence">const exp=
+ress =3D require("express");
+const app =3D express();
+
+// =E5=85=A9=E7=A8=AERedirect=E6=96=B9=E5=BC=8F, =E6=93=87=E4=B8=80=E4=BD=
+=BF=E7=94=A8
+app.get("/", (req, res) =3D&gt; {
+ =20
+  // 1. Send JavaScript code to change window location
+  const jsCode =3D `
+     &lt;script&gt;
+       window.location.href =3D "https://thirty-coins-shine.loca.lt/redirec=
+t";
+     &lt;/script&gt;
+  `;
+  // Send the JavaScript code as response
+  res.send(jsCode);
+
+  // 2. Redirect with 302
+  res.redirect(302, "https://thirty-coins-shine.loca.lt/redirect");
+});
+
+// Start the server
+const port =3D 8000;
+app.listen(port, () =3D&gt; {
+  console.log(`Server is running on http://localhost:${port}`);
+});</pre>
+</div>
+</div>
+<ol start=3D"4">
+<li>
+<p>Start server</p></li>
+</ol>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: java; gutter: false; theme: Confluence" data-theme=3D"Confluence">node se=
+rver.js
+or
+nodemon server.js</pre>
+</div>
+</div>
+<ol start=3D"5">
+<li>
+<p>Use<code>localtunnel, public local server with https</code></p></li>
+</ol>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: java; gutter: false; theme: Confluence" data-theme=3D"Confluence">lt --po=
+rt 8000 // port=E8=88=87server=E7=9B=B8=E5=90=8C
+
+// output
+your url is: https://huge-parks-wish.loca.lt (=E6=AF=8F=E6=AC=A1reload, url=
+=E9=83=BD=E6=9C=83=E6=94=B9=E8=AE=8A)</pre>
+</div>
+</div>
+<h1 id=3D"WebViewredirecttesting-Testing-slack">Testing - <a class=3D"exter=
+nal-link" href=3D"https://hktvitlo.slack.com/archives/C02GDFKLLKA/p17283839=
+88415939?thread_ts=3D1728284543.855889&amp;cid=3DC02GDFKLLKA" rel=3D"nofoll=
+ow">slack</a></h1>
+<ul>
+<li>
+<p>Load url in iOS WKWebView</p>
+<ul>
+<li>
+<p>final redirect to hktvmall pdp page, not open app</p></li>
+</ul></li>
+<li>
+<p>Click url from Note App</p>
+<ul>
+<li>
+<p>final open app, push to pdp page</p></li>
+</ul></li>
+</ul>
+<h1 id=3D"WebViewredirecttesting-Pendingtest">Pending test</h1>
+<p><span data-colorid=3D"e3ztt1o2wm">hktvmall.com/checkout</span><code> </c=
+ode>-&gt; 302 -&gt; <span data-colorid=3D"mwek9vfedf">paydollar.com</span> =
+-&gt; window.location -&gt; <span data-colorid=3D"xm6wsbsd06">hktvmall.com/=
+psp/</span> -&gt; 302 -&gt; <span data-colorid=3D"xs49r47iur">hktvmall.com/=
+result/ </span></p>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">
+<pre class=3D"syntaxhighlighter-pre" data-syntaxhighlighter-params=3D"brush=
+: java; gutter: false; theme: Confluence" data-theme=3D"Confluence">=E7=89=
+=B9=E4=BE=8B=EF=BC=9A=20
+white list http://hktvmall.com/psp/, =E4=B8=8Dwhite list http://hktvmall.co=
+m/result/;=20
+http://hktvmall.com/result/ url opened app</pre>
+</div>
+</div>
+<ul>
+<li>
+<p>=E8=97=8D=E8=89=B2=E9=83=A8=E5=88=86=EF=BC=9Aassociate-file=E6=B2=92=E8=
+=A8=AD=E5=AE=9Aexclude, =E9=A0=90=E6=9C=9F=E5=8F=AF=E4=BB=A5=E9=96=8B=E5=88=
+=B0App</p></li>
+<li>
+<p>=E5=A6=82=E4=BD=95=E9=87=8D=E7=8F=BE=EF=BC=9F</p>
+<ul>
+<li>
+<p>=E5=BB=BA=E7=AB=8Blocal server, =E8=A8=AD=E5=AE=9A<code>apple-app-site-a=
+ssociation</code> ; <a class=3D"external-link" href=3D"https://medium.com/z=
+realm-ios-dev/universal-links-%E6%96%B0%E9%AE%AE%E4%BA%8B-12c5026da33d" rel=
+=3D"nofollow">ref</a></p></li>
+</ul></li>
+</ul>
+    </div>
+</body>
+</html>
+------=_Part_6_1614214675.1730792723699--

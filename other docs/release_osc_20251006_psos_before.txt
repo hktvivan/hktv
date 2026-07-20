@@ -1,0 +1,1 @@
+hktv_psos	psos_good_receive_note	ADD COLUMN `logistics_arrival_date` DATETIME DEFAULT NULL AFTER `sign_date`;

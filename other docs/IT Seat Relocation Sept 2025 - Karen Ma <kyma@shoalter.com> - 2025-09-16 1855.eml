@@ -1,0 +1,2444 @@
+Return-Path: <kyma@shoalter.com>
+Received: from zmail01.hktv.com.hk (LHLO zmail.hktv.com.hk) (192.168.232.2)
+ by zmail.hktv.com.hk with LMTP; Tue, 16 Sep 2025 18:55:32 +0800 (HKT)
+Received: from localhost (localhost [127.0.0.1])
+	by zmail.hktv.com.hk (Postfix) with ESMTP id 30BF6100A3BC57;
+	Tue, 16 Sep 2025 18:55:32 +0800 (HKT)
+Authentication-Results: zmail.hktv.com.hk (amavis);
+ domainkeys=pass (1024-bit key) header.from=kyma@shoalter.com
+ header.d=shoalter.com; dkim=pass (1024-bit key) header.d=shoalter.com
+Received: from zmail.hktv.com.hk ([127.0.0.1])
+ by localhost (zmail.hktv.com.hk [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id BrUHbROGaZls; Tue, 16 Sep 2025 18:55:31 +0800 (HKT)
+Received: from mail.shoalter.com (mail-02.shoalter.com [14.198.249.164])
+	by zmail.hktv.com.hk (Postfix) with ESMTPS id 4297810091B8ED;
+	Tue, 16 Sep 2025 18:55:31 +0800 (HKT)
+Received: from mail014.g2.hktvmall.com (mail014.g2.hktvmall.com [14.198.251.14])
+	by mail.shoalter.com (8.15.2/8.15.2) with ESMTPS id 58GAtF6F1814922
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Sep 2025 18:55:29 +0800
+DomainKey-Signature: s=outbound; d=shoalter.com; c=nofws; q=dns;
+  h=Received:Received:IronPort-SDR:Received:Received:
+   Received:Received:Date:From:Reply-To:To:Cc:Message-ID:
+   Subject:MIME-Version:Content-Type:X-Originating-IP:
+   X-Mailer:Thread-Index:Thread-Topic;
+  b=YD9t9z5PzA8xLDTFYaKZyTJ6IRTo1ySj6nYt4cqc9iOY397+TTLf8ldd
+   mcBRURMH4wN7VXld+4sWiMMiPzkRCznj5QD7C5ixtzD5NC4yKd+cI7Cco
+   ET+/a2w1niKSOWaskVgDXF4mq1vqXByrQKJQ/tocG3LBTULuEPkH5roLt
+   I=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=shoalter.com; i=@shoalter.com; q=dns/txt; s=outbound;
+  t=1758020129; x=1789556129;
+  h=date:from:reply-to:to:cc:message-id:subject:mime-version;
+  bh=UOqz5QnbBQn/yYFDq0YuNvKc9L8cNGDE9G5aQ6rKysI=;
+  b=cIujExEmG7vsNHID0zG7cQVAIWHUSMBNB5mrnWF3sqz6SD0QfZXQee0T
+   QjKVPnHmkI1iCeJEAm/wAO5Mi6WU02cmcSyWOEM/xUl/RwxeBYnW2Il6O
+   cmvODFH7dQ5magDwmL+134Cjn5e4SJVxQiHmJg51qGQjzknRN0KdmXOGK
+   Y=;
+Received: from mta-02.hktvmall.com ([14.198.249.168])
+  by mail014.g2.hktvmall.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2025 18:55:15 +0800
+Received: from mta-02.hktvmall.com ([14.198.249.168])
+  by mail014.g2.hktvmall.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2025 18:55:15 +0800
+IronPort-SDR: ZvD+GYbJVwfXP8u3afKfCoJPW8Kt5ybt3nBCtQRyxFfa5ATtdJfdyTt/VAnH7ET95btA4RwFP+
+ bsuUDnfRxRhQ==
+Received: from zmail.hktv.com.hk (014198248203.hkmpcl.com [14.198.248.203] (may be forged))
+	by mta-02.hktvmall.com (8.15.2/8.15.2) with ESMTP id 58GAtEVt1175446;
+	Tue, 16 Sep 2025 18:55:14 +0800
+Received: from localhost (localhost [127.0.0.1])
+	by zmail.hktv.com.hk (Postfix) with ESMTP id CA4AE100A74BF6;
+	Tue, 16 Sep 2025 18:55:14 +0800 (HKT)
+Received: from zmail.hktv.com.hk ([127.0.0.1])
+ by localhost (zmail.hktv.com.hk [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id nJdmUiycODRM; Tue, 16 Sep 2025 18:55:14 +0800 (HKT)
+Received: from zmail.hktv.com.hk (zmail01.hktv.com.hk [192.168.232.2])
+	by zmail.hktv.com.hk (Postfix) with ESMTP id 9100B10091B8ED;
+	Tue, 16 Sep 2025 18:55:14 +0800 (HKT)
+Date: Tue, 16 Sep 2025 18:55:14 +0800 (HKT)
+From: Karen Ma <kyma@shoalter.com>
+Reply-To: Karen Ma <kyma@shoalter.com>
+To: noc <noc@hktv.com.hk>, ADM Announcement <hktvadmin@hktv.com.hk>
+Cc: Anthony Ng <shoulun@shoalter.com>, IT <it@shoalter.com>
+Message-ID: <269324857.3041166.1758020114477.JavaMail.zimbra@zmail.shoalter.com.hk>
+Subject: IT Seat Relocation Sept 2025
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="=_c8fb22e3-6a5e-47cc-b616-411ca80a0095"
+X-Originating-IP: [192.168.232.2]
+X-Mailer: Zimbra 10.0.12_GA_0125 (ZimbraWebClient - GC140 (Win)/10.0.12_GA_0125)
+Thread-Index: Bzp5zuoyub/MYzhd7zBlgCTXzNZ0GA==
+Thread-Topic: IT Seat Relocation Sept 2025
+
+--=_c8fb22e3-6a5e-47cc-b616-411ca80a0095
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Dear Admin / NOC=20
+
+Would you please arrange the seat relocation as below, effective on 17 Sept=
+ 2025 5pm .=20
+
+Dept.=20
+=09
+Name=20
+=09
+Email ID=20
+=09Data port =09Voice Port =09
+Target=20
+Relocation Date=20
+
+From (D) =09To (D) =09From (V) =09To (V) =09Tel. no.=20
+IT =09Toby Tsui =09tobyt =09D5106 =09D5339 =09V5106 =09V5339 =093145 5923 =
+=0917/09/2025 17:00:00=20
+IT =09Karen Ma =09kyma =09D5068 =09D5033 =09V5068 =09V5033 =093998 8330 =09=
+17/09/2025 17:00:00=20
+IT =09James Zheng =09cmzheng =09D5060 =09D5046 =09V5060 =09V5046 =093145 55=
+74 =0917/09/2025 17:00:00=20
+IT =09Gary Shiu =09tsshiu =09D5279 =09D5038 =09V5279 =09V5038 =093145 6095 =
+=0917/09/2025 17:00:00=20
+IT =09Jin Huen =09swhuen =09D5082 =09D5343 =09V5082 =09V5343 =093145 5531 =
+=0917/09/2025 17:00:00=20
+IT =09Jack Hung =09yphung =09D5084 =09D5344 =09V5084 =09V5344 =093145 5568 =
+=0917/09/2025 17:00:00=20
+IT =09Shelby Hung =09hungcy =09D5085 =09D5345 =09V5085 =09V5345 =093998 835=
+1 =0917/09/2025 17:00:00=20
+IT =09Leo Tam =09tctam =09D5077 =09D5030 =09V5077 =09V5030 =093145 5524 =09=
+17/09/2025 17:00:00=20
+IT =09Gordon Li =09licm =09D5058 =09D5039 =09V5058 =09V5039 =093145 5526 =
+=0917/09/2025 17:00:00=20
+IT =09Slan Chong =09snchong =09D5280 =09D5044 =09V5280 =09V5044 =093977 434=
+5 =0917/09/2025 17:00:00=20
+IT =09Chris Kwok =09hkkwok =09D5059 =09D5045 =09V5059 =09V5045 =093998 8108=
+ =0917/09/2025 17:00:00=20
+IT =09Bowie Lam =09tylam =09D5065 =09D5060 =09V5065 =09V5060 =093998 8116 =
+=0917/09/2025 17:00:00=20
+IT =09Shin Wong =09ycwong =09D5083 =09D5342 =09V5083 =09V5342 =093145 5586 =
+=0917/09/2025 17:00:00=20
+IT =09John Cheung =09mankitc =09D5278 =09D5037 =09V5278 =09V5037 =093998 83=
+67 =0917/09/2025 17:00:00=20
+IT =09Robert Wong =09tathow =09D5054 =09D5040 =09V5054 =09V5040 =093145 608=
+6 =0917/09/2025 17:00:00=20
+IT =09Ikshahang Thalang =09ithalang =09D5061 =09D5047 =09V5061 =09V5047 =09=
+3145 5571 =0917/09/2025 17:00:00=20
+IT =09Edith Leung =09szeyul =09D5078 =09D5031 =09V5078 =09V5031 =093145 607=
+9 =0917/09/2025 17:00:00=20
+IT =09Danny Tang =09wktang =09D5066 =09D5061 =09V5066 =09V5061 =093145 4463=
+ =0917/09/2025 17:00:00=20
+IT =09Raymond Tang =09mptang =09D5281 =09D5059 =09V5281 =09V5059 =093145 55=
+81 =0917/09/2025 17:00:00=20
+IT =09Thomas Ng =09kitlunn =09D5045 =09D5347 =09V5045 =09V5347 =093998 8526=
+ =0917/09/2025 17:00:00=20
+IT =09Sway Lu =09swlu =09D5037 =09D5348 =09V5037 =09V5348 =093998 8529 =091=
+7/09/2025 17:00:00=20
+IT =09Jack Chen =09chengj =09D5038 =09D5346 =09V5038 =09V5346 =093145 5532 =
+=0917/09/2025 17:00:00=20
+IT =09Jack Li =09likc =09D5067 =09D5032 =09V5067 =09V5032 =093998 8101 =091=
+7/09/2025 17:00:00=20
+IT =09Kenny Ng =09ngwy =09D5044 =09D5058 =09V5044 =09V5058 =093145 5579 =09=
+17/09/2025 17:00:00=20
+IT =09HoYin Chan =09hoyinc =09D5131 =09D5122 =09V5131 =09V5122 =093998 8354=
+ =0917/09/2025 17:00:00=20
+IT =09Andy Lee =09yplee =09D5130 =09D5121 =09V5130 =09V5121 =093145 5537 =
+=0917/09/2025 17:00:00=20
+IT =09Cheryl Tam =09cyuentam =09D5132 =09D5120 =09V5132 =09V5120 =093145 44=
+67 =0917/09/2025 17:00:00=20
+IT =09Matthew Chan =09wcchan =09D5128 =09D5119 =09V5128 =09V5119 =093145 44=
+64 =0917/09/2025 17:00:00=20
+IT =09Rex Mak =09tcmak =09D5135 =09D5117 =09V5135 =09V5117 =09no Tel. =0917=
+/09/2025 17:00:00=20
+IT =09Tom Wong =09yikhin =09D5134 =09D5116 =09V5134 =09V5116 =093998 8368 =
+=0917/09/2025 17:00:00=20
+IT =09Tony Lau =09sminglau =09D5133 =09D5115 =09V5133 =09V5115 =093145 4465=
+ =0917/09/2025 17:00:00=20
+IT =09Hollis Cheng =09yincheng =09D5096 =09D5049 =09V5096 =09V5049 =0939988=
+619 =0917/09/2025 17:00:00=20
+IT =09Fredie Lim =09ykflim =09D5097 =09D5050 =09V5097 =09V5050 =0931455523 =
+=0917/09/2025 17:00:00=20
+IT =09Thomas Cheng =09szechunc =09D5103 =09D5043 =09V5103 =09V5043 =0939988=
+350 =0917/09/2025 17:00:00=20
+IT =09Mark Zhang =09zhangw =09D5104 =09D5341 =09V5104 =09V5341 =09No Tel. =
+=0917/09/2025 17:00:00=20
+IT =09Joyce Tam =09ystam =09D5099 =09D5041 =09V5099 =09V5041 =0939988528 =
+=0917/09/2025 17:00:00=20
+IT =09Ivan Ho =09hoth =09D5091 =09D5048 =09V5091 =09V5048 =0931859232 =0917=
+/09/2025 17:00:00=20
+IT =09Zoe Yau =09yaucy =09D5098 =09D5042 =09V5098 =09V5042 =0939988369 =091=
+7/09/2025 17:00:00=20
+IT =09Gong Chen =09gchen =09D5110 =09D5034 =09V5110 =09V5034 =09No Tel. =09=
+17/09/2025 17:00:00=20
+IT =09Brian Ho =09brian.ho@offbeattech.com =09D5169 =09D5055 =09V5169 =09V5=
+055 =09No Tel. =0917/09/2025 17:00:00=20
+IT =09Livia Fung =09fungcm =09D5092 =09D5036 =09V5092 =09V5036 =0931454482 =
+=0917/09/2025 17:00:00=20
+IT =09Tommy Chan =09chanhf =09D5090 =09D5056 =09V5090 =09V5056 =0939988527 =
+=0917/09/2025 17:00:00=20
+IT =09Mandy Tsang =09tsangmy =09D5168 =09D5035 =09V5168 =09V5035 =09No Tel.=
+ =0917/09/2025 17:00:00=20
+IT =09Jason Poon =09jason.poon@offbeattech.com =09D5154 =09D5062 =09V5154 =
+=09V5062 =09No Tel. =0917/09/2025 17:00:00=20
+IT =09Edison Chan =09edison.chan@offbeattech.com =09D5161 =09D5063 =09V5161=
+ =09V5063 =09No Tel. =0917/09/2025 17:00:00=20
+IT =09Joe Chan =09joe.chan@offbeattech.com =09D5163 =09D5064 =09V5163 =09V5=
+064 =09No Tel. =0917/09/2025 17:00:00=20
+IT =09Gabriel Shau =09gbshau =09D5089 =09D5057 =09V5089 =09V5057 =093185924=
+8 =0917/09/2025 17:00:00=20
+IT =09Aries Siu =09cyasiu =09D5119 =09D5080 =09V5119 =09V5080 =093145 6088 =
+=0917/09/2025 17:00:00=20
+IT =09Brian Choi =09mkchoi =09D5120 =09D5079 =09V5120 =09V5079 =093145 5585=
+ =0917/09/2025 17:00:00=20
+IT =09Adriane Lam =09fwlam =09D5121 =09D5072 =09V5121 =09V5072 =093145 6078=
+ =0917/09/2025 17:00:00=20
+IT =09Ivan Li =09chihungl =09D5114 =09D5069 =09V5114 =09V5069 =093145 5580 =
+=0917/09/2025 17:00:00=20
+IT =09Lawrence Tse =09pytse =09D5115 =09D5070 =09V5115 =09V5070 =093145 552=
+8 =0917/09/2025 17:00:00=20
+IT =09Kristy Yip =09hyyip =09D5116 =09D5071 =09V5116 =09V5071 =093145 6499 =
+=0917/09/2025 17:00:00=20
+IT =09Charles Poon =09cypoon =09D5111 =09D5081 =09V5111 =09V5081 =093145 60=
+84 =0917/09/2025 17:00:00=20
+IT =09Jeff Chan =09cschan =09D5112 =09D5073 =09V5112 =09V5073 =093998 8159 =
+=0917/09/2025 17:00:00=20
+IT =09Peter Hui =09mingkit =09D5113 =09D5074 =09V5113 =09V5074 =093998 8366=
+ =0917/09/2025 17:00:00=20
+IT =09DB Gateway =09/ =09D5117 =09D5062 =09V5117 =09V5062 =09/ =0917/09/202=
+5 17:00:00=20
+
+
+For any query, please feel free to contact me. Thanks!=20
+
+Regards,=20
+Karen Ma=20
+Information Technology=20
+Hong Kong Technology Venture Company Limited=20
+Direct Line: (852)3998-8330=20
+Email: kyma@shoalter.com=20
+
+HKTVmall - Ranked No.2 in YouGov Recommend Rankings 2022 Hong Kong=20
+HKTVmall - YouGov 2022=E5=B9=B4=E9=A6=99=E6=B8=AF=E5=93=81=E7=89=8C=E6=8E=
+=A8=E8=96=A6=E5=BA=A6=E6=8E=92=E8=A1=8C=E6=A6=9C=E7=AC=AC2=E4=BD=8D=20
+
+--=_c8fb22e3-6a5e-47cc-b616-411ca80a0095
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div style=3D"font-family: arial,helvetica,sans-serif; font-siz=
+e: 9pt; color: #000000"><style type=3D"text/css" scoped=3D""><!--td {border=
+: 1px solid #cccccc;}br {mso-data-placement:same-cell;}--></style><style ty=
+pe=3D"text/css" scoped=3D""><!--td {border: 1px solid #cccccc;}br {mso-data=
+-placement:same-cell;}--></style><div><div><span style=3D"font-size: 9pt; f=
+ont-family: arial, helvetica, sans-serif;" data-mce-style=3D"font-size: 9pt=
+; font-family: arial, helvetica, sans-serif;">Dear Admin / NOC</span></div>=
+<div><br data-mce-bogus=3D"1"></div><div><span style=3D"font-size: 9pt; fon=
+t-family: arial, helvetica, sans-serif;" data-mce-style=3D"font-size: 9pt; =
+font-family: arial, helvetica, sans-serif;">Would you please arrange the se=
+at relocation as below, effective on <span style=3D"background-color: rgb(2=
+55, 255, 0);" data-mce-style=3D"background-color: #ffff00;"><strong>17 Sept=
+ 2025 5pm</strong></span>.</span></div><div><br data-mce-bogus=3D"1"></div>=
+</div><div><!--StartFragment--><google-sheets-html-origin><style type=3D"te=
+xt/css"><!--td {border: 1px solid #cccccc;}br {mso-data-placement:same-cell=
+;}--></style><table xmlns=3D"http://www.w3.org/1999/xhtml" cellspacing=3D"0=
+" cellpadding=3D"0" dir=3D"ltr" border=3D"1" style=3D"table-layout: fixed; =
+font-size: 10pt; font-family: Arial; width: 0px; border-collapse: collapse;=
+ border: none;" data-sheets-root=3D"1" data-sheets-baot=3D"1" data-mce-styl=
+e=3D"table-layout: fixed; font-size: 10pt; font-family: Arial; width: 0px; =
+border-collapse: collapse; border: none;"><colgroup><col width=3D"148"><col=
+ width=3D"148"><col width=3D"228"><col width=3D"152"><col width=3D"152"><co=
+l width=3D"152"><col width=3D"152"><col width=3D"152"><col width=3D"152"></=
+colgroup><tbody><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;=
+"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: bold; text-alig=
+n: center;" rowspan=3D"2" colspan=3D"1" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: bold; text-align: center;"><div style=3D"max-he=
+ight: 42px;" data-mce-style=3D"max-height: 42px;">Dept.</div></td><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: bold; text-align: center;"=
+ rowspan=3D"2" colspan=3D"1" data-mce-style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: bold; text-align: center;"><div style=3D"max-height: 42px;=
+" data-mce-style=3D"max-height: 42px;">Name</div></td><td style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: bold; text-align: center;" rowspan=3D"=
+2" colspan=3D"1" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: bold; text-align: center;"><div style=3D"max-height: 42px;" data-mce-s=
+tyle=3D"max-height: 42px;">Email ID</div></td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: bold; text-align: center;" rowspan=3D"1" colsp=
+an=3D"2" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: bol=
+d; text-align: center;">Data port</td><td style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size=
+: 12pt; font-weight: bold; text-align: center;" rowspan=3D"1" colspan=3D"3"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: bold; text-=
+align: center;">Voice Port</td><td style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: bold; text-align: center;" rowspan=3D"2" colspan=3D"1" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: bold; text-align: =
+center;"><div style=3D"max-height: 42px;" data-mce-style=3D"max-height: 42p=
+x;">Target <br>Relocation Date</div></td></tr><tr style=3D"height: 21px;" d=
+ata-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt=
+; font-weight: bold; text-align: center;" data-mce-style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: bold; text-align: center;">From (D)</td><td s=
+tyle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle;=
+ font-family: Calibri; font-size: 12pt; font-weight: bold; text-align: cent=
+er;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: bold; t=
+ext-align: center;">To (D)</td><td style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: bold; text-align: center;" data-mce-style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: bold; text-align: center;">From (V)</td><td st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: bold; text-align: cente=
+r;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: bold; te=
+xt-align: center;">To (V)</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: bold; text-align: center;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: bold; text-align: center;">Tel. no.</td></tr><t=
+r style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">Toby Tsui</td><td style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;">tobyt</td><td style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;">D5106</td><td style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;">D5339</td><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">V5106</td><td style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;">V5339</td><td style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;">3145 5923</td><td style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><=
+tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;">Karen Ma</td><td style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;">kyma</td><td style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;">D5068</td><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">D5033</td><td style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;">V5068</td><td style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;">V5033</td><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">3998 8330</td><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><t=
+r style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">James Zheng</td><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">cmzheng</td><td style=3D"o=
+verflow: hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; font-fam=
+ily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;">D5060</td><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">D5046</td><td style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;">V5060</td><td style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;">V5046</td><td style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;">3145 5574</td><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></=
+tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"=
+overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fa=
+mily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;">Gary Shiu</td><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">tsshiu</td><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">D5279</td><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">D5038</td><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">V5279</td><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">V5038</td><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">3145 6095</td><td st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:00:=
+00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><t=
+d style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-s=
+tyle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle;=
+ font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</td><td st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">Jin Huen</td><td =
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;">swhuen</td><td =
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: bottom=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;">D5082</td><td s=
+tyle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle;=
+ font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-styl=
+e=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fo=
+nt-family: Calibri; font-size: 12pt; font-weight: normal;">D5343</td><td st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">V5082</td><td sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">V5343</td><td sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">3145 5531</td><td=
+ style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:=
+00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"=
+><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mc=
+e-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</td><td=
+ style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: normal;">Jack Hung</td>=
+<td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce=
+-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;">yphung</td>=
+<td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: bo=
+ttom; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce=
+-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: botto=
+m; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5084</td><=
+td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-=
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5344</td><t=
+d style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-s=
+tyle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle;=
+ font-family: Calibri; font-size: 12pt; font-weight: normal;">V5084</td><td=
+ style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: normal;">V5344</td><td =
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;">3145 5568</td><=
+td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-=
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 1=
+7:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px=
+;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</td><=
+td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-=
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;">Shelby Hung<=
+/td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data=
+-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">hungcy<=
+/td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;" data=
+-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: b=
+ottom; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5085</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5345</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5085</td=
+><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mc=
+e-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5345</td>=
+<td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce=
+-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;">3998 8351</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/20=
+25 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: =
+21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Leo Tam<=
+/td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data=
+-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">tctam</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: bo=
+ttom; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5077</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5030</td=
+><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mc=
+e-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5077</td>=
+<td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce=
+-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5030</td><=
+td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-=
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;">3145 5524</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/202=
+5 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 2=
+1px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Gordon Li=
+</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" dat=
+a-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">licm</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: bo=
+ttom; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5058</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5039</td=
+><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mc=
+e-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5058</td>=
+<td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce=
+-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5039</td><=
+td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-=
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;">3145 5526</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/202=
+5 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 2=
+1px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Slan Chon=
+g</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">sncho=
+ng</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;">D528=
+0</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5044=
+</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" dat=
+a-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5280<=
+/td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data=
+-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5044</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">3977 434=
+5</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09=
+/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"heigh=
+t: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">I=
+T</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Chris=
+ Kwok</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">h=
+kkwok</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;">D=
+5059</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5=
+045</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" =
+data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V50=
+59</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V504=
+5</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">3998 =
+8108</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17=
+/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"he=
+ight: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Bo=
+wie Lam</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>tylam</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: bottom; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+D5065</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D=
+5060</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5=
+065</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" =
+data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V50=
+60</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">3998=
+ 8116</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">1=
+7/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"h=
+eight: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">S=
+hin Wong</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+">ycwong</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: bottom; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: bottom; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+">D5083</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>D5342</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+V5083</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V=
+5342</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">31=
+45 5586</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D=
+"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>John Cheung</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;">mankitc</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;">D5278</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;">D5037</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;">V5278</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;">V5037</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;">3998 8367</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-sty=
+le=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;">Robert Wong</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">tathow</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">D5054</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;">D5040</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;">V5054</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;">V5040</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;">3145 6086</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce=
+-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;">Ikshahang Thalang</td><td style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;">ithalang</td><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">D5061</td><td style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;">D5047</td><td style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;">V5061</td><td style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;">V5047</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;">3145 5571</td><td style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21p=
+x;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;">Edith Leung</td><td style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;">szeyul</td><td style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;">D5078</td><td style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;">D5031</td><td style=3D"overflow: hidden; padding:=
+ 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: =
+12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;">V5078</td><td style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;">V5031</td><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">3145 6079</td><td style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height:=
+ 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;">Danny Tang</td><td style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;">wktang</td><td style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;">D5066</td><td style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;">D5061</td><td style=3D"overflow: hidden; paddi=
+ng: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-siz=
+e: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding:=
+ 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: =
+12pt; font-weight: normal;">V5066</td><td style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;">V5061</td><td style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;">3145 4463</td><td style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"heig=
+ht: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;">Raymond Tang</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">mptang</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">D5281</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">D5059</td><td style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;">V5281</td><td style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;">V5059</td><td style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddi=
+ng: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-siz=
+e: 12pt; font-weight: normal;">3145 5581</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D=
+"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">Thomas Ng</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">kitlunn</td><td style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;">D5045</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">D5347</td><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">V5045</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">V5347</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">3998 8526</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=
+=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">Sway Lu</td><td style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;">swlu</td><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">D5037</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">D5348</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">V5037</td><td style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;">V5348</td><td style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;">3998 8529</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=
+=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">Jack Chen</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">chengj</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">D5038</td><td style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;">D5346</td><td style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;">V5038</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">V5346</td><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">3145 5532</td><td style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr sty=
+le=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;">Jack Li</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">likc</td><td style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;">D5067</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">D5032</td><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">V5067</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">V5032</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">3998 8101</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=
+=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">Kenny Ng</td><td style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;">ngwy</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">D5044</td><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">D5058</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">V5044</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">V5058</td><td style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;">3145 5579</td><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=
+=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">HoYin Chan</td><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">hoyinc</td><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">D5131</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">D5122</td><td style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;">V5131</td><td style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;">V5122</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">3998 8354</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr st=
+yle=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">Andy Lee</td><td style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;">yplee</td><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">D5130</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">D5121</td><td style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;">V5130</td><td style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;">V5121</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">3145 5537</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr st=
+yle=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">Cheryl Tam</td><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">cyuentam</td><td style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;">D5132</td><td style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;">D5120</td><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">V5132</td><td style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;">V5120</td><td style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;">3145 4467</td><td style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><=
+tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;">Matthew Chan</td><td style=3D"=
+overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fa=
+mily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;">wcchan</td><td style=3D"=
+overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fa=
+mily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;">D5128</td><td style=3D"o=
+verflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fam=
+ily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;">D5119</td><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">V5128</td><td style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;">V5119</td><td style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;">3145 4464</td><td style=3D"o=
+verflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fam=
+ily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td><=
+/tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"=
+overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fa=
+mily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;">Rex Mak</td><td style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;">tcmak</td><td style=3D"=
+overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fa=
+mily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;">D5135</td><td style=3D"o=
+verflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fam=
+ily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;">D5117</td><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">V5135</td><td style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;">V5117</td><td style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;">no Tel.</td><td style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></t=
+r><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;">Tom Wong</td><td style=3D"o=
+verflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fam=
+ily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;">yikhin</td><td style=3D"o=
+verflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fam=
+ily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;">D5134</td><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">D5116</td><td style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;">V5134</td><td style=3D"over=
+flow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family=
+: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;">V5116</td><td style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;">3998 8368</td><td style=3D"ov=
+erflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fami=
+ly: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overf=
+low: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family:=
+ Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></=
+tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"=
+overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-fa=
+mily: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"ove=
+rflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-famil=
+y: Calibri; font-size: 12pt; font-weight: normal;">Tony Lau</td><td style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D=
+"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-f=
+amily: Calibri; font-size: 12pt; font-weight: normal;">sminglau</td><td sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">D5133</td><td sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">D5115</td><td sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">V5133</td><td sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">V5115</td><td sty=
+le=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; f=
+ont-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=
+=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; fon=
+t-family: Calibri; font-size: 12pt; font-weight: normal;">3145 4465</td><td=
+ style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 17:=
+00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px;"=
+><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mc=
+e-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</td><td=
+ style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-st=
+yle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; =
+font-family: Calibri; font-size: 12pt; font-weight: normal;">Hollis Cheng</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">yincheng=
+</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" dat=
+a-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5096<=
+/td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data=
+-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5049</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5096</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5049</td=
+><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mc=
+e-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;">39988619</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/20=
+25 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: =
+21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Fredie L=
+im</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">ykfl=
+im</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D509=
+7</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5050=
+</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" dat=
+a-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5097<=
+/td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data=
+-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5050</=
+td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">31455523=
+</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" dat=
+a-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/=
+2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height=
+: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT=
+</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" dat=
+a-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Thomas=
+ Cheng</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+szechunc</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+">D5103</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>D5043</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+V5103</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V=
+5043</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">39=
+988350</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"=
+height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+Mark Zhang</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;">zhangw</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;">D5104</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;">D5341</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+">V5104</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>V5341</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+No Tel.</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D=
+"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>Joyce Tam</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;">ystam</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;">D5099</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+">D5041</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>V5099</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+V5041</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">3=
+9988528</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D=
+"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+>Ivan Ho</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+">hoth</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+D5091</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D=
+5048</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5=
+091</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" =
+data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V50=
+48</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">3185=
+9232</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17=
+/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"he=
+ight: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Zo=
+e Yau</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">y=
+aucy</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5=
+098</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" =
+data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D50=
+42</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V509=
+8</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5042=
+</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" dat=
+a-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">399883=
+69</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/0=
+9/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"heig=
+ht: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertica=
+l-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal=
+;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">=
+IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Gong=
+ Chen</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">g=
+chen</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-=
+align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;"=
+ data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5=
+110</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" =
+data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D50=
+34</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" d=
+ata-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align=
+: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V511=
+0</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5034=
+</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" dat=
+a-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">No Tel=
+.</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09=
+/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"heigh=
+t: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical=
+-align: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;=
+" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-al=
+ign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">I=
+T</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-ali=
+gn: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" da=
+ta-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">Brian=
+ Ho</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-a=
+lign: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" =
+data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-alig=
+n: middle; font-family: Calibri; font-size: 12pt; font-weight: normal;">bri=
+an.ho@offbeattech.com</td><td style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;">D5169</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">D5055</td><td style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;">V5169</td><td style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;">V5055</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">No Tel.</td><td style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-m=
+ce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;">Livia Fung</td><td style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;">fungcm</td><td style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;">D5092</td><td style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;">D5036</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">V5092</td><td style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;">V5036</td><td style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;">31454482</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data=
+-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">Tommy Chan</td><td style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;">chanhf</td><td style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;">D5090</td><td style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;">D5056</td><td style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;">V5090</td><td style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;">V5056</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">39988527</td><td style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" da=
+ta-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;">Mandy Tsang</td><td style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;">tsangmy</td><td style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;">D5168</td><td style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;">D5035</td><td style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;">V5168</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;">V5035</td><td style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;">No Tel.</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;"=
+ data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;">Jason Poon</td><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">jason.poon@offbeattech.com</td><td style=3D"overflow=
+: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Ca=
+libri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;">D5154</td><td style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;">D5062</td><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">V5154</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">V5062</td><td style=3D"overflow: hi=
+dden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibr=
+i; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;">No Tel.</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr st=
+yle=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflo=
+w: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: C=
+alibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: h=
+idden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calib=
+ri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;">Edison Chan</td><td style=3D"overfl=
+ow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: =
+Calibri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow:=
+ hidden; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Cal=
+ibri; font-size: 12pt; font-weight: normal;">edison.chan@offbeattech.com</t=
+d><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: =
+middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-m=
+ce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5161</td=
+><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mc=
+e-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;">D5063</td>=
+<td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce=
+-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middl=
+e; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5161</td><=
+td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-=
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;">V5063</td><t=
+d style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-s=
+tyle=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle;=
+ font-family: Calibri; font-size: 12pt; font-weight: normal;">No Tel.</td><=
+td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-=
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;">17/09/2025 1=
+7:00:00</td></tr><tr style=3D"height: 21px;" data-mce-style=3D"height: 21px=
+;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align:=
+ middle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-=
+mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mi=
+ddle; font-family: Calibri; font-size: 12pt; font-weight: normal;">IT</td><=
+td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: mid=
+dle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mce-=
+style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: middle=
+; font-family: Calibri; font-size: 12pt; font-weight: normal;">Joe Chan</td=
+><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: m=
+iddle; font-family: Calibri; font-size: 12pt; font-weight: normal;" data-mc=
+e-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertical-align: midd=
+le; font-family: Calibri; font-size: 12pt; font-weight: normal;">joe.chan@o=
+ffbeattech.com</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;">D5163</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;">D5064</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vert=
+ical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: nor=
+mal;">V5163</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;">V5064</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; vertic=
+al-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norma=
+l;">No Tel.</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-styl=
+e=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; verti=
+cal-align: middle; font-family: Calibri; font-size: 12pt; font-weight: norm=
+al;">Gabriel Shau</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">gbshau</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">D5089</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;">D5057</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;">V5089</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;">V5057</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ver=
+tical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: no=
+rmal;">31859248</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mce-=
+style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;">Aries Siu</td><td style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;">cyasiu</td><td style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;">D5119</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">D5080</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; =
+vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight:=
+ normal;">V5119</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; v=
+ertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight: =
+normal;">V5080</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px; ve=
+rtical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight: n=
+ormal;">3145 6088</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: middle; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data-mc=
+e-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">Brian Choi</td><td style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;">mkchoi</td><td style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;">D5120</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">D5079</td><td style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3p=
+x; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weig=
+ht: normal;">V5120</td><td style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px=
+; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weigh=
+t: normal;">V5079</td><td style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3px;=
+ vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-weight=
+: normal;">3145 5585</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" data=
+-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">Adriane Lam</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;">fwlam</td><td style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;">D5121</td><td style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;">D5072</td><td style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;">V5121</td><td style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px =
+3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-we=
+ight: normal;">V5072</td><td style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px 3=
+px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-wei=
+ght: normal;">3145 6078</td><td style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;" d=
+ata-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;">Ivan Li</td><td style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;">chihungl</td><td style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;">D5114</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;">D5069</td><td style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2=
+px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font=
+-weight: normal;">V5114</td><td style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2p=
+x 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-=
+weight: normal;">V5069</td><td style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px 2px=
+ 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; font-w=
+eight: normal;">3145 5580</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21px;"=
+ data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px =
+2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fon=
+t-weight: normal;">Lawrence Tse</td><td style=3D"overflow: hidden; padding:=
+ 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: =
+12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;">pytse</td><td style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;">D5115</td><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">D5070</td><td style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;">V5115</td><td style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3p=
+x 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; f=
+ont-weight: normal;">V5070</td><td style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3px=
+ 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; fo=
+nt-weight: normal;">3145 5528</td><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: 21=
+px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;">IT</td><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">Kristy Yip</td><td style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;">hyyip</td><td style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;">D5116</td><td style=3D"overflow: hidden; padding:=
+ 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: =
+12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;">D5071</td><td style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px=
+ 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt=
+; font-weight: normal;">V5116</td><td style=3D"overflow: hidden; padding: 2=
+px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12=
+pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px =
+3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt;=
+ font-weight: normal;">V5071</td><td style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2px 3=
+px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12pt; =
+font-weight: normal;">3145 6499</td><td style=3D"overflow: hidden; padding:=
+ 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: =
+12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"height: =
+21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidden; padding:=
+ 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: =
+12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: 2p=
+x 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 12p=
+t; font-weight: normal;">Charles Poon</td><td style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddi=
+ng: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-siz=
+e: 12pt; font-weight: normal;">cypoon</td><td style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddi=
+ng: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-siz=
+e: 12pt; font-weight: normal;">D5111</td><td style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;">D5081</td><td style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;">V5111</td><td style=3D"overflow: hidden; paddi=
+ng: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-siz=
+e: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding:=
+ 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: =
+12pt; font-weight: normal;">V5081</td><td style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;">3145 6084</td><td style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"hei=
+ght: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;">Jeff Chan</td><td style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;">cschan</td><td style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;">D5112</td><td style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;">D5073</td><td style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddi=
+ng: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-siz=
+e: 12pt; font-weight: normal;">V5112</td><td style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;">V5073</td><td style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding=
+: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-size:=
+ 12pt; font-weight: normal;">3998 8159</td><td style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=3D"h=
+eight: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;">Peter Hui</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">mingkit</td><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">D5113</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">D5074</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">V5113</td><td style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;">V5074</td><td style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;">3998 8366</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">17/09/2025 17:00:00</td></tr><tr style=
+=3D"height: 21px;" data-mce-style=3D"height: 21px;"><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">IT</td><td style=3D"overflow: hidd=
+en; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri;=
+ font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;">DB Gateway</td><td style=3D"overflow: =
+hidden; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Cali=
+bri; font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hid=
+den; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri=
+; font-size: 12pt; font-weight: normal;">/</td><td style=3D"overflow: hidde=
+n; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; =
+font-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;">D5117</td><td style=3D"overflow: hidden=
+; padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; f=
+ont-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;">D5062</td><td style=3D"overflow: hidden;=
+ padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fo=
+nt-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pa=
+dding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-=
+size: 12pt; font-weight: normal;">V5117</td><td style=3D"overflow: hidden; =
+padding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; fon=
+t-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; pad=
+ding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-s=
+ize: 12pt; font-weight: normal;">V5062</td><td style=3D"overflow: hidden; p=
+adding: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font=
+-size: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padd=
+ing: 2px 3px 2px 3px; vertical-align: bottom; font-family: Calibri; font-si=
+ze: 12pt; font-weight: normal;">/</td><td style=3D"overflow: hidden; paddin=
+g: 2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size=
+: 12pt; font-weight: normal;" data-mce-style=3D"overflow: hidden; padding: =
+2px 3px 2px 3px; vertical-align: middle; font-family: Calibri; font-size: 1=
+2pt; font-weight: normal;">17/09/2025 17:00:00</td></tr></tbody></table><!-=
+-EndFragment--> </google-sheets-html-origin><div style=3D"clear: both;" dat=
+a-mce-style=3D"clear: both;"><br></div></div><div data-marker=3D"__SIG_PRE_=
+_"><br><span style=3D"font-size: 9pt; font-family: arial, helvetica, sans-s=
+erif;" data-mce-style=3D"font-size: 9pt; font-family: arial, helvetica, san=
+s-serif;">For any query, please feel free to contact me. Thanks! </span><br=
+><br><span style=3D"font-size: 9pt; font-family: arial, helvetica, sans-ser=
+if;" data-mce-style=3D"font-size: 9pt; font-family: arial, helvetica, sans-=
+serif;">Regards, </span><br><span style=3D"font-size: 9pt; font-family: ari=
+al, helvetica, sans-serif;" data-mce-style=3D"font-size: 9pt; font-family: =
+arial, helvetica, sans-serif;">Karen Ma </span><br><span style=3D"font-size=
+: 9pt; font-family: arial, helvetica, sans-serif;" data-mce-style=3D"font-s=
+ize: 9pt; font-family: arial, helvetica, sans-serif;">Information Technolog=
+y</span><br><span style=3D"font-size: 9pt; font-family: arial, helvetica, s=
+ans-serif;" data-mce-style=3D"font-size: 9pt; font-family: arial, helvetica=
+, sans-serif;">Hong Kong Technology Venture Company Limited</span><br><span=
+ style=3D"font-size: 9pt; font-family: arial, helvetica, sans-serif;" data-=
+mce-style=3D"font-size: 9pt; font-family: arial, helvetica, sans-serif;">Di=
+rect Line: (852)3998-8330 </span><br><span style=3D"font-size: 9pt; font-fa=
+mily: arial, helvetica, sans-serif;" data-mce-style=3D"font-size: 9pt; font=
+-family: arial, helvetica, sans-serif;">Email: kyma@shoalter.com</span><br>=
+<br><span style=3D"font-size: 9pt; font-family: arial, helvetica, sans-seri=
+f;" data-mce-style=3D"font-size: 9pt; font-family: arial, helvetica, sans-s=
+erif;">HKTVmall - Ranked No.2 in YouGov Recommend Rankings 2022 Hong Kong</=
+span><br><span style=3D"font-size: 9pt; font-family: arial, helvetica, sans=
+-serif;" data-mce-style=3D"font-size: 9pt; font-family: arial, helvetica, s=
+ans-serif;">HKTVmall - YouGov 2022=E5=B9=B4=E9=A6=99=E6=B8=AF=E5=93=81=E7=
+=89=8C=E6=8E=A8=E8=96=A6=E5=BA=A6=E6=8E=92=E8=A1=8C=E6=A6=9C=E7=AC=AC2=E4=
+=BD=8D</span></div></div></body></html>
+--=_c8fb22e3-6a5e-47cc-b616-411ca80a0095--

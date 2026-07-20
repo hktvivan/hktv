@@ -1,0 +1,29 @@
+<prompt>
+    Use HyperOrch to divide the below tasks to subagents. I need statistics. Task divided as below.
+    Use REST API (opensearch-py) should be more easier to gather statistics.
+    The sample query will points you to a index that state as below. Due to poor implementation of UI of Opensearch.
+    I suggest to use API method to gather our information.
+</prompt>
+<task_1>
+    <task_brief>
+        We need to pin-point specific merchant code on HKTVmall Production, on update product promotion.
+
+        Target Merchant Code is "C0889001"
+
+        Try to perform opensearch to spot the API call rate peak for this merchant.
+    </task_brief>
+    <index>"[applications]_ecom-app-*"</index>
+    <filter_field_1>"message":"\*H7449001\*"</filter_field_1>
+    <filter_field_2>"message":"\*Receive discountRuleData call from MMS\*"</filter_field_2>
+    <example_query_url>
+        https://backbone-efk.hktv.com.hk/app/discover?security_tenant=HKTV#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:'2026-06-01T22:00:00.000Z',to:'2026-06-02T07:00:00.000Z'))&_a=(columns:!(_source),filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ea86f1d0-5bf9-11ed-97f7-bf915435e82f,key:message,negate:!f,params:(query:'%5C*C0889001%5C*'),type:phrase),query:(match_phrase:(message:'%5C*C0889001%5C*'))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:ea86f1d0-5bf9-11ed-97f7-bf915435e82f,key:message,negate:!f,params:(query:'%5C*Receive%20discountRuleData%20call%20from%20MMS%5C*'),type:phrase),query:(match_phrase:(message:'%5C*Receive%20discountRuleData%20call%20from%20MMS%5C*')))),index:ea86f1d0-5bf9-11ed-97f7-bf915435e82f,interval:auto,query:(language:kuery,query:''),sort:!())
+    </example_query_url>
+    <date_range_from>2026-06-02 06:00:00</date_range_from>
+    <date_range_to>2026-06-02 15:00:00</date_range_to>
+    <time_interval>15 minutes</time_interval>
+    <format>
+        Analyze SKU Code appearance between Task 1 AND Task 2.
+        Find out the pattern of the SKU per call from the client. (E.g. Duplication, Parallelism).
+        Symptom: Production master DB in the cluster found commit waiting.
+    </format>
+</task_1>
