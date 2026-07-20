@@ -46,7 +46,7 @@ cli
   .option("--date <date>", "Date (YYYY-MM-DD, default: today)")
   .action(async (opts) => {
     try {
-      await addCommand({ ...opts, hours: Number(opts.hours) });
+      await addCommand({ ...opts, project: String(opts.project), detail: opts.detail ? String(opts.detail) : undefined, hours: Number(opts.hours) });
     } catch (e: any) {
       console.error(e.message);
       process.exit(1);
